@@ -1,9 +1,14 @@
-deploy:
-  runs-on: ubuntu-latest
-  steps:
-      - uses: actions/checkout@v3
-      - uses: JorgeLNJunior/render-deploy@v1.4.4
-        with:
-          service_id: ${{ secrets.RENDER_SERVICE_ID }}
-          api_key: ${{ secrets.RENDER_API_KEY }}
-          wait_deploy: true 
+name: Deploy to Render
+run-name: ${{ github.actor }} is deploying to Render 🚀
+on: [push]
+jobs:
+  Deploy-to-Render:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Deploy to Render
+        uses: JorgeLNJunior/render-deploy@v1.4.4
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      
