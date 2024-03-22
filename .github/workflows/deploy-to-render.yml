@@ -17,5 +17,6 @@ jobs:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Render Deploy Action
         uses: johnbeynon/render-deploy-action@v0.0.8
+        wait-for-success: true
       - run: echo "🍏 This job's status is ${{ job.status }}."
       
