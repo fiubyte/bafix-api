@@ -16,12 +16,20 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "${{ vars.RENDER_API_KEY }}"
-      - run: echo "${{ vars.RENDER_SERVICE_ID }}"
-      - name: Deploy to production
-        uses: johnbeynon/render-deploy-action@v0.0.8
+      - run: echo "RENDER_API_KEY ${{ vars.RENDER_API_KEY }}"
+      - run: echo "RENDER_SERVICE_ID ${{ vars.RENDER_SERVICE_ID }}"
+
+      - uses: actions/checkout@v3
+      - uses: JorgeLNJunior/render-deploy@v1.4.4
         with:
-          service-id: ${{ vars.RENDER_SERVICE_ID }}
-          api-key: ${{ vars.RENDER_API_KEY }}
+          service_id: ${{ vars.RENDER_SERVICE_ID }}
+          api_key: ${{ vars.RENDER_API_KEY }}
+          wait_deploy: true 
+
+      # - name: Deploy to production
+      #   uses: johnbeynon/render-deploy-action@v0.0.8
+      #   with:
+      #     service-id: ${{ vars.RENDER_SERVICE_ID }}
+      #     api-key: ${{ vars.RENDER_API_KEY }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       
