@@ -1,5 +1,5 @@
 name: Deploy to Render
-run-name: ${{ github.actor }} is deploying to Render 🚀
+run-name: ${{ github.actor }} is deploying to Render from branch ${{ github.ref }} 🚀
 on:
 # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -16,8 +16,8 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "$RENDER_API_KEY"
-      - run: echo "$RENDER_SERVICE_ID"
+      - run: echo "${{ vars.RENDER_API_KEY }}"
+      - run: echo "${{ vars.RENDER_SERVICE_ID }}"
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
