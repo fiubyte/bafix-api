@@ -4,8 +4,9 @@ on:
 # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ main ]
-
-# Allows you to run this workflow manually from the Actions tab
+  pull_request:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
   Deploy-to-Render:
@@ -15,12 +16,11 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - uses: actions/checkout@v3
-      - name: Render deploy to prod
-        uses: JorgeLNJunior/render-deploy@v1.4.4
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          service_id: ${{ secrets.MY_RENDER_SERVICE_ID }}
-          api_key: ${{ secrets.MY_RENDER_API_KEY }}
-          wait_deploy: true 
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait-for-success: true
       - run: echo "🍏 This job's status is ${{ job.status }}."
       
