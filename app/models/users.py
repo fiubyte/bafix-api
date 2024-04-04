@@ -7,17 +7,17 @@ from sqlmodel import Field, SQLModel
 
 class UserBase(SQLModel):
     email: EmailStr = Field(index=True)
-    roles: Optional[str] = None
-    name: Optional[str] = None
-    surname: Optional[str] = None
-    profile_photo_url: Optional[str] = None
+    roles: Optional[str] = "USER,PROVIDER"
+    name: Optional[str] = "John"
+    surname: Optional[str] = "Doe"
+    profile_photo_url: Optional[str] = "https://www.cronista.com/files/image/401/401221/618bebe24727e.jpg"
     # google_id?
-    document_number: Optional[str] = None
-    address: Optional[str] = None
-    address_lat: Optional[str] = None
-    address_long: Optional[str] = None
-    max_radius: Optional[int] = None
-    phone_number: Optional[str] = None
+    document_number: Optional[str] = "40123456"
+    address: Optional[str] = "Av. Corrientes 1368"
+    address_lat: Optional[str] = "-34.604110"
+    address_long: Optional[str] = "-58.386020"
+    max_radius: Optional[int] = "1"
+    phone_number: Optional[str] = "+5491142022983"
 
 
 class User(UserBase, table=True):
@@ -26,11 +26,9 @@ class User(UserBase, table=True):
     created_at: datetime.datetime = datetime.datetime.now()
 
 
-class UserInput(SQLModel):
-    username: str
+class UserInput(UserBase):
     password: str = Field(max_length=256, min_length=6)
     password2: str
-    email: EmailStr
 
     @validator('password2')
     def password_match(cls, v, values, **kwargs):
@@ -40,7 +38,7 @@ class UserInput(SQLModel):
 
 
 class UserLogin(SQLModel):
-    username: str = "admin"
+    email: str = "admin@example.com"
     password: str = "admin"
 
 

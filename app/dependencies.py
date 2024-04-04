@@ -20,10 +20,10 @@ def get_current_user(decoded_token: str = Depends(auth_handler.auth_wrapper),
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail='Could not validate credentials'
     )
-    username = decoded_token
-    if username is None:
+    email = decoded_token
+    if email is None:
         raise credentials_exception
-    user = find_user(session, username)
+    user = find_user(session, email)
     if user is None:
         raise credentials_exception
     return user

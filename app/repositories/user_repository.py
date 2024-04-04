@@ -7,8 +7,8 @@ def select_all_users(session: Session):
     return session.exec(select(User)).all()
 
 
-def find_user(session: Session, name):
-    return session.exec(select(User).where(User.username == name)).first()
+def find_user(session: Session, email):
+    return session.exec(select(User).where(User.email == email)).first()
 
 
 def update_user(session: Session, user):

@@ -3,18 +3,18 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .db import create_db_and_tables, drop_db_and_tables, seed_db
+from .db import init_db, drop_db, seed_db
 from .routers import auth, service_categories, services, users
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up BA Fix API")
-    create_db_and_tables()
+    init_db()
     seed_db()
     yield
 
-    drop_db_and_tables()
+    drop_db()
     print("Shutting down BA Fix API")
 
 
@@ -31,7 +31,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# app.include_router(services.router, dependencies=[Depends(get_current_user())])
 app.include_router(auth.router)
 app.include_router(service_categories.router)
 app.include_router(services.router)

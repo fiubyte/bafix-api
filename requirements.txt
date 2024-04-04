@@ -8,7 +8,6 @@ uvicorn
 pyJWT
 bcrypt
 passlib
-
 annotated-types==0.6.0
 anyio==3.7.1
 click==8.1.7
@@ -22,3 +21,4 @@ starlette==0.27.0
 typing_extensions==4.8.0
 pydantic[email]
 segno
+psycopg2-binary
