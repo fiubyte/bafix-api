@@ -1,13 +1,14 @@
 from typing import Optional
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, Relationship
+
+from app.models.users import User
 
 
 class ServiceBase(SQLModel):
     # Id is Optional because it is auto generated
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: str = Field(index=True)
-    approval_status: str = None
+    approved: bool = False
     title: str = None
     description: str = None
     photo_url: Optional[str] = None
@@ -17,8 +18,9 @@ class ServiceBase(SQLModel):
 
 
 class Service(ServiceBase, table=True):
-    # user_id
-    # service_category_id
+    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
+    user: User = Relationship(back_populates="services")
+    service_category_id: Optional[int] = Field(default=None, foreign_key="servicecategory.id")
     pass
 
 

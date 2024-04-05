@@ -10,6 +10,7 @@ from .routers import auth, service_categories, services, users
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up BA Fix API")
+    drop_db()
     init_db()
     seed_db()
     yield

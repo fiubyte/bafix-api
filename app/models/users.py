@@ -2,7 +2,7 @@ import datetime
 from typing import Optional
 
 from pydantic import validator, EmailStr
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, Relationship
 
 
 class UserBase(SQLModel):
@@ -24,6 +24,7 @@ class User(UserBase, table=True):
     id: Optional[int] = Field(primary_key=True)
     password: str = Field(max_length=256, min_length=6)
     created_at: datetime.datetime = datetime.datetime.now()
+    services: list["Service"] = Relationship(back_populates="user")
 
 
 class UserInput(UserBase):

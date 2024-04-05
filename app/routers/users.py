@@ -4,7 +4,7 @@ from sqlmodel import Session
 from ..auth import auth_handler
 from ..dependencies import UserDependency, get_session
 from ..models.users import UserRead, UserInput, User
-from ..repositories.user_repository import select_all_users
+from ..repositories.user_repository import select_all_users, find_user, find_user_by_id
 
 router = APIRouter(
     prefix="/users",
@@ -13,14 +13,14 @@ router = APIRouter(
 )
 
 
-@router.get("/{id}", response_model=UserRead, description='Get a User by ID')
-async def get_user(
-        id: int,
+@router.get("/{id}", response_model=User, description='Get a User by ID')
+def get_user(
+        user_id: int,
         user: UserDependency,
         session: Session = Depends(get_session),
 ):
-    services = []
-    return services
+    user = find_user_by_id(session, user_id)
+    return user
 
 
 @router.post("/", status_code=201, response_model=User, description='Register a new user')
