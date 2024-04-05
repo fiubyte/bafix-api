@@ -13,13 +13,14 @@ router = APIRouter(
 )
 
 
-@router.get("/{id}", response_model=User, description='Get a User by ID')
+@router.get("/{id}", response_model=UserRead, description='Get a User by ID')
 def get_user(
         user_id: int,
         user: UserDependency,
         session: Session = Depends(get_session),
 ):
     user = find_user_by_id(session, user_id)
+    user = UserRead.from_orm(user)
     return user
 
 

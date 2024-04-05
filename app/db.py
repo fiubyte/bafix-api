@@ -32,15 +32,69 @@ users = [
 
 service_categories = [
     ServiceCategory(
-        id=1,
         title="Plomería",
-        description="Servicios de plomería en general",
+        description="Servicios de plomería",
     ),
     ServiceCategory(
-        id=2,
+        title="Pinturería",
+        description="Servicios de pintura",
+    ),
+    ServiceCategory(
+        title="Albañilería",
+        description="Servicios de albañilería",
+    ),
+    ServiceCategory(
+        title="Carpintería",
+        description="Servicios de carpintería",
+    ),
+    ServiceCategory(
+        title="Gasista",
+        description="Servicios de gas",
+    ),
+    ServiceCategory(
+        title="Mecánico",
+        description="Servicios de mecánica",
+    ),
+    ServiceCategory(
         title="Electricista",
-        description="Servicios de electricista en general",
-    )
+        description="Servicios de electricidad",
+    ),
+    ServiceCategory(
+        title="Cerrajería",
+        description="Servicios de cerrajería",
+    ),
+    ServiceCategory(
+        title="Reparación de electrodomésticos",
+        description="Servicios de reparación de electrodomésticos",
+    ),
+    ServiceCategory(
+        title="Instalación de aires acondicionados",
+        description="Servicios de instalación de aires acondicionados",
+    ),
+    ServiceCategory(
+        title="Jardinería/Paisajista",
+        description="Servicios de jardinería y paisajismo",
+    ),
+    ServiceCategory(
+        title="Decoración de interiores",
+        description="Servicios de decoración de interiores",
+    ),
+    ServiceCategory(
+        title="Arquitectura",
+        description="Servicios de arquitectura",
+    ),
+    ServiceCategory(
+        title="Pedicuría/Manicuría",
+        description="Servicios de pedicura y manicura",
+    ),
+    ServiceCategory(
+        title="Peluquería",
+        description="Servicios de peluquería",
+    ),
+    ServiceCategory(
+        title="Abogados",
+        description="Servicios de abogado",
+    ),
 ]
 
 services = [

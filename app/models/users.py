@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import validator, EmailStr
 from sqlmodel import Field, SQLModel, Relationship
@@ -22,14 +22,20 @@ class UserBase(SQLModel):
 
 class User(UserBase, table=True):
     id: Optional[int] = Field(primary_key=True)
-    password: str = Field(max_length=256, min_length=6)
+    password: Optional[str] = Field(max_length=256, min_length=6)
     created_at: datetime.datetime = datetime.datetime.now()
     services: list["Service"] = Relationship(back_populates="user")
 
 
+class UserRead(UserBase):
+    id: int
+    created_at: datetime.datetime
+    services: list
+
+
 class UserInput(UserBase):
-    password: str = Field(max_length=256, min_length=6)
-    password2: str
+    password: Optional[str] = Field(max_length=256, min_length=6)
+    password2: Optional[str]
 
     @validator('password2')
     def password_match(cls, v, values, **kwargs):
@@ -45,8 +51,3 @@ class UserLogin(SQLModel):
 
 class UserUpdate(SQLModel):
     email: EmailStr = None
-
-
-class UserRead(UserBase):
-    id: int
-    created_at: datetime.datetime
