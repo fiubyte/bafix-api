@@ -5,6 +5,7 @@ from sqlmodel import Session
 from user_agents import parse
 
 from ..auth import auth_handler
+from ..clients.geoapify import get_coordinates_from_address
 from ..dependencies import UserDependency, get_session
 from ..models.enums.roles import Role
 from ..models.users import UserRead, UserInput, User
@@ -48,6 +49,7 @@ def create_user(
                 raise HTTPException(status_code=400, detail='Email is taken')
             user_to_upsert = u
 
+    address_lat, address_long = get_coordinates_from_address(user.address)
     hashed_pwd = auth_handler.get_password_hash(user.password)
     if not user_to_upsert:
         # Insert: no previous user
@@ -55,7 +57,7 @@ def create_user(
                               surname=user.surname,
                               profile_photo_url=user.profile_photo_url, document_number=user.document_number,
                               address=user.address,
-                              address_lat=user.address_lat, address_long=user.address_long, max_radius=user.max_radius,
+                              address_lat=address_lat, address_long=address_long, max_radius=user.max_radius,
                               phone_number=user.phone_number)
     else:
         # Upsert: previous user, merge the data

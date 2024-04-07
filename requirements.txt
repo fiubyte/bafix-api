@@ -22,3 +22,4 @@ pydantic[email]
 segno
 psycopg2-binary
 user-agents
+requests

@@ -15,8 +15,6 @@ class UserBase(SQLModel):
     # google_id?
     document_number: Optional[str] = ""
     address: Optional[str] = ""
-    address_lat: Optional[str] = ""
-    address_long: Optional[str] = ""
     max_radius: Optional[int] = None
     phone_number: Optional[str] = ""
 
@@ -27,12 +25,16 @@ class User(UserBase, table=True):
     created_at: datetime.datetime = datetime.datetime.now()
     roles: Optional[str] = Role.USER.value + ',' + Role.PROVIDER.value
     services: list["Service"] = Relationship(back_populates="user")
+    address_lat: Optional[str] = ""
+    address_long: Optional[str] = ""
 
 
 class UserRead(UserBase):
     id: int
     created_at: datetime.datetime
     services: list
+    address_lat: Optional[str]
+    address_long: Optional[str]
 
 
 class UserInput(UserBase):
