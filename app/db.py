@@ -3,6 +3,7 @@ import os
 from sqlmodel import SQLModel, create_engine, Session
 
 from .auth import auth_handler
+from .models.enums.roles import Role
 from .models.service_categories import ServiceCategory
 from .models.services import Service
 from .models.users import User
@@ -26,7 +27,7 @@ users = [
         id=1,
         email="admin@example.com",
         password=auth_handler.get_password_hash("admin"),
-        roles="ADMIN"
+        roles=Role.ADMIN.value
     )
 ]
 

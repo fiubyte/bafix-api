@@ -1,29 +1,31 @@
 import datetime
-from typing import Optional, List
+from typing import Optional
 
 from pydantic import validator, EmailStr
 from sqlmodel import Field, SQLModel, Relationship
 
+from app.models.enums.roles import Role
+
 
 class UserBase(SQLModel):
     email: EmailStr = Field(index=True)
-    roles: Optional[str] = "USER,PROVIDER"
-    name: Optional[str] = "John"
-    surname: Optional[str] = "Doe"
-    profile_photo_url: Optional[str] = "https://www.cronista.com/files/image/401/401221/618bebe24727e.jpg"
+    name: Optional[str] = ""
+    surname: Optional[str] = ""
+    profile_photo_url: Optional[str] = ""
     # google_id?
-    document_number: Optional[str] = "40123456"
-    address: Optional[str] = "Av. Corrientes 1368"
-    address_lat: Optional[str] = "-34.604110"
-    address_long: Optional[str] = "-58.386020"
-    max_radius: Optional[int] = "1"
-    phone_number: Optional[str] = "+5491142022983"
+    document_number: Optional[str] = ""
+    address: Optional[str] = ""
+    address_lat: Optional[str] = ""
+    address_long: Optional[str] = ""
+    max_radius: Optional[int] = None
+    phone_number: Optional[str] = ""
 
 
 class User(UserBase, table=True):
     id: Optional[int] = Field(primary_key=True)
     password: Optional[str] = Field(max_length=256, min_length=6)
     created_at: datetime.datetime = datetime.datetime.now()
+    roles: Optional[str] = Role.USER.value + ',' + Role.PROVIDER.value
     services: list["Service"] = Relationship(back_populates="user")
 
 
