@@ -24,7 +24,7 @@ def get_user(
     return user
 
 
-@router.post("/", status_code=201, response_model=User, description='Register a new user')
+@router.post("/", status_code=201, response_model=UserRead, description='Register a new user')
 def create_user(
         user: UserInput,
         session: Session = Depends(get_session)
@@ -33,6 +33,7 @@ def create_user(
     if any(x.email == user.email for x in users):
         raise HTTPException(status_code=400, detail='Email is taken')
 
+    # TODO: define the role USER/PROVIDER based on something
     hashed_pwd = auth_handler.get_password_hash(user.password)
     u = User(email=user.email, password=hashed_pwd, roles=user.roles, name=user.name, surname=user.surname,
              profile_photo_url=user.profile_photo_url, document_number=user.document_number, address=user.address,
