@@ -11,10 +11,10 @@ def find_user(session: Session, email):
     return session.exec(select(User).where(User.email == email)).first()
 
 
-def find_user_by_id(session: Session, user_id):
-    return session.exec(select(User).where(User.id == user_id)).first()
-
-
 def update_user(session: Session, user):
     session.merge(user)
     session.commit()
+
+
+def find_user_by_id(session: Session, user_id):
+    return session.exec(select(User).where(User.id == user_id)).first()

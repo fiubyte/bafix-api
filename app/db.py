@@ -24,7 +24,6 @@ def drop_db():
 
 users = [
     User(
-        id=1,
         email="admin@example.com",
         password=auth_handler.get_password_hash("admin"),
         roles=Role.ADMIN.value,

@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.get("/", response_model=List[ServiceCategory], status_code=200)
-async def get_service_categories(
+def get_service_categories(
         user: UserDependency,
         session: Session = Depends(get_session)
 ):

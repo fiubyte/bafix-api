@@ -8,8 +8,6 @@ from app.models.users import User, UserRead
 
 class ServiceBase(SQLModel):
     service_category_id: Optional[int] = Field(default=None, foreign_key="servicecategory.id")
-    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
-    approved: bool = False
     title: str = "Service name"
     description: str = "Service description"
     photo_url: Optional[str] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s"
@@ -20,9 +18,10 @@ class ServiceBase(SQLModel):
 
 class Service(ServiceBase, table=True):
     id: int = Field(default=None, primary_key=True)
+    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
     user: User = Relationship(back_populates="services")
+    approved: bool = False
     service_category: ServiceCategory = Relationship()
-    pass
 
 
 class ServiceCreate(ServiceBase):

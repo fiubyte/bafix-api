@@ -18,13 +18,16 @@ router = APIRouter(
 )
 
 
-@router.get("/{id}", response_model=UserRead, description='Get a User by ID')
+@router.get("/{user_id}", status_code=200, response_model=UserRead, description='Get a User by ID')
 def get_user(
         user_id: int,
         user: UserDependency,
         session: Session = Depends(get_session)
 ):
     user = find_user_by_id(session, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail='User not found')
+
     user = UserRead.from_orm(user)
     return user
 
