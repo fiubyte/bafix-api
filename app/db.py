@@ -8,6 +8,12 @@ from .models.service_categories import ServiceCategory
 from .models.services import Service
 from .models.users import User
 
+# Local disk database
+# sqlite_file_name = "database.db"
+# sqlite_url = f"sqlite:///{sqlite_file_name}"
+# connect_args = {"check_same_thread": False}
+# engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
+
 db_url = "postgresql://{}:{}@{}:{}/{}".format(
     "bafix", os.environ['DB_PASSWORD'], "dpg-cnug04acn0vc73b6mrrg-a.oregon-postgres.render.com", 5432, "bafix_db"
 )
