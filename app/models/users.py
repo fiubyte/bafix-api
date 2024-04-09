@@ -9,6 +9,7 @@ from app.models.enums.roles import Role
 
 class UserBase(SQLModel):
     email: EmailStr = Field(index=True)
+    approved: bool = False
     name: Optional[str] = ""
     surname: Optional[str] = ""
     profile_photo_url: Optional[str] = ""

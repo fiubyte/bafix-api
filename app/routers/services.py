@@ -5,7 +5,7 @@ from sqlmodel import Session
 
 from ..dependencies import UserDependency, get_session
 from ..models.services import ServiceCreate, ServiceRead, Service
-from ..repositories.service import find_all, find_service_by_id
+from ..repositories.service import find_all, find_service_by_id, find_services_for_user
 from ..repositories.user_repository import find_user_by_id
 
 router = APIRouter(
@@ -18,10 +18,12 @@ router = APIRouter(
 @router.get("/", response_model=List[ServiceRead])
 def get_services(
         user: UserDependency,
-        session: Session = Depends(get_session)
+        session: Session = Depends(get_session),
+        mine: bool = False
 ):
-    services = find_all(session)
-    return services
+    if mine:
+        return find_services_for_user(session, user.id)
+    return find_all(session)
 
 
 @router.get("/{service_id}", status_code=200, response_model=ServiceRead)
