@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, Any
 
+from pydantic import validator
 from sqlmodel import Field, SQLModel, Relationship
 
 from app.models.service_categories import ServiceCategory
@@ -10,10 +11,18 @@ class ServiceBase(SQLModel):
     service_category_id: Optional[int] = Field(default=None, foreign_key="servicecategory.id")
     title: str = "Service name"
     description: str = "Service description"
-    photo_url: Optional[str] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s"
+    photo_url: Optional[
+        str] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s"
     availability_time_start: str = "9:00"
     availability_time_end: str = "18:00"
     availability_days: str = "Lunes,Martes,Miercoles,Jueves,Viernes"
+
+    # Important for PATCH /services
+    @validator('*')
+    def empty_str_to_none(cls, v):
+        if v == '':
+            return None
+        return v
 
 
 class Service(ServiceBase, table=True):
