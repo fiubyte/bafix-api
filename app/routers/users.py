@@ -52,14 +52,14 @@ def create_user(
                 raise HTTPException(status_code=400, detail='Email is taken')
             user_to_upsert = u
 
-    address_lat, address_long = get_coordinates_from_address(user.address)
+    address_lat, address_long = get_coordinates_from_address(user.street, user.street_number)
     hashed_pwd = auth_handler.get_password_hash(user.password)
     if not user_to_upsert:
         # Insert: no previous user
         user_to_upsert = User(email=user.email, password=hashed_pwd, roles=role_to_create, name=user.name,
                               surname=user.surname, approved=False,
                               profile_photo_url=user.profile_photo_url, document_number=user.document_number,
-                              address=user.address,
+                              street=user.street, street_number=user.street_number, postal_code=user.postal_code,
                               address_lat=address_lat, address_long=address_long, max_radius=user.max_radius,
                               phone_number=user.phone_number)
     else:

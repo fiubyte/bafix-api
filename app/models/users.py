@@ -9,21 +9,23 @@ from app.models.enums.roles import Role
 
 class UserBase(SQLModel):
     email: EmailStr = Field(index=True)
-    approved: bool = False
     name: Optional[str] = ""
     surname: Optional[str] = ""
     profile_photo_url: Optional[str] = ""
-    # google_id?
     document_number: Optional[str] = ""
-    address: Optional[str] = ""
+    street: Optional[str] = ""
+    street_number: Optional[str] = ""
+    postal_code: Optional[str] = ""
     max_radius: Optional[int] = None
     phone_number: Optional[str] = ""
+    # google_id?
 
 
 class User(UserBase, table=True):
     id: Optional[int] = Field(primary_key=True)
     password: Optional[str] = Field(max_length=256, min_length=6)
     created_at: datetime.datetime = datetime.datetime.now()
+    approved: bool = False
     roles: Optional[str] = Role.USER.value + ',' + Role.PROVIDER.value
     services: list["Service"] = Relationship(back_populates="user")
     address_lat: Optional[str] = ""
