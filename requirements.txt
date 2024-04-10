@@ -23,3 +23,4 @@ segno
 psycopg2-binary
 user-agents
 requests
+firebase-admin

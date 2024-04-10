@@ -18,3 +18,9 @@ def update_user(session: Session, user):
 
 def find_user_by_id(session: Session, user_id):
     return session.exec(select(User).where(User.id == user_id)).first()
+
+
+def save_user(session: Session, user):
+    session.add(user)
+    session.commit()
+    session.refresh(user)
