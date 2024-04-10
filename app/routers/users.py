@@ -71,3 +71,20 @@ def create_user(
     session.commit()
     session.refresh(user_to_upsert)
     return user_to_upsert
+
+
+@router.post("/{user_id}/approve", status_code=200, response_model=UserRead)
+def approve_user(
+        user_id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail='User not found')
+
+    user.approved = True
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user

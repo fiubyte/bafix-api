@@ -41,6 +41,7 @@ class ServiceRead(ServiceBase):
     id: int
     user: UserRead
     service_category: ServiceCategory
+    approved: bool
 
 
 class ServiceUpdate(ServiceBase):

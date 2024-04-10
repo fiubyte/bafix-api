@@ -57,6 +57,21 @@ def update_service(
     return service
 
 
+@router.post("/{id}/approve", status_code=200, response_model=ServiceRead)
+def approve_service(
+        id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    service.approved = True
+    save_service(session, service)
+    return service
+
+
 @router.post("/", status_code=201, response_model=ServiceRead)
 def create_service(
         service: ServiceCreate,
@@ -70,6 +85,5 @@ def create_service(
     session.add(new_service := Service.from_orm(service))
     new_service.user_id = user.id
     new_service.approved = False
-    session.commit()
-    session.refresh(new_service)
+    save_service(session, new_service)
     return new_service
