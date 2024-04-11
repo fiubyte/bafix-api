@@ -15,7 +15,7 @@ from .models.users import User
 # engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
 
 db_url = "postgresql://{}:{}@{}:{}/{}".format(
-    "bafix", os.environ['DB_PASSWORD'], "dpg-cnug04acn0vc73b6mrrg-a.oregon-postgres.render.com", 5432, "bafix_db"
+    "bafix", os.environ['DB_PASSWORD'], "dpg-coc6svgl5elc739ob64g-a.oregon-postgres.render.com", 5432, "bafix_db_9tkt"
 )
 engine = create_engine(db_url, echo=True)
 
