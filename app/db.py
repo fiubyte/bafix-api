@@ -8,16 +8,19 @@ from .models.service_categories import ServiceCategory
 from .models.services import Service
 from .models.users import User
 
-# Local disk database
-# sqlite_file_name = "database.db"
-# sqlite_url = f"sqlite:///{sqlite_file_name}"
-# connect_args = {"check_same_thread": False}
-# engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
-
-db_url = "postgresql://{}:{}@{}:{}/{}".format(
-    "bafix", os.environ['DB_PASSWORD'], "dpg-coc6svgl5elc739ob64g-a.oregon-postgres.render.com", 5432, "bafix_db_9tkt"
-)
-engine = create_engine(db_url, echo=True)
+if os.getenv('ENV', 'local') == 'local':
+    # Local disk database
+    sqlite_file_name = "database.db"
+    sqlite_url = f"sqlite:///{sqlite_file_name}"
+    connect_args = {"check_same_thread": False}
+    engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
+    print("Connected to local BA Fix DB")
+else:
+    db_url = "postgresql://{}:{}@{}:{}/{}".format(
+        "bafix", os.environ['DB_PASSWORD'], "dpg-coc6svgl5elc739ob64g-a.oregon-postgres.render.com", 5432, "bafix_db_9tkt"
+    )
+    engine = create_engine(db_url, echo=True)
+    print("Connected to remote BA Fix DB")
 
 
 def init_db():
