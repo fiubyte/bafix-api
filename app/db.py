@@ -215,6 +215,149 @@ services = [
         availability_time_end="19:00",
         availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
     ),
+    Service(
+        user_id=2,
+        service_category_id=14,#Pedicuría/Manicuría
+        approved=True,
+        title="Pedicura completa con esmaltado permanente",
+        description="Disfruta de pies hermosos y bien cuidados con una pedicura de alta calidad que incluye esmaltado duradero.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="8:00",
+        availability_time_end="19:00",
+        availability_days="Lunes,Jueves"
+    ),
+    Service(
+        user_id=2,
+        service_category_id=15,#Peluqueria
+        approved=True,
+        title="Tratamiento de keratina para cabello dañado",
+        description="Restaura la salud y el brillo de tu cabello con un tratamiento de keratina profesional.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="15:00",
+        availability_time_end="20:00",
+        availability_days="Martes,Jueves,Viernes"
+    ),
+    Service(
+        user_id=3,
+        service_category_id=1,#Plomeria
+        approved=True,
+        title="Reparación de cañerías de agua caliente",
+        description="Solución rápida para problemas de fugas o averías en las tuberías de agua caliente de tu hogar.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="07:00",
+        availability_time_end="16:00",
+        availability_days="Lunes,Martes,Jueves"
+    ),
+    Service(
+        user_id=3,
+        service_category_id=2,#Pintureria
+        approved=True,
+        title="Pintura de interiores",
+        description="Renueva tus espacios con una nueva capa de pintura para tu habitación, agregando frescura y estilo.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="08:00",
+        availability_time_end="19:00",
+        availability_days="Miercoles,Viernes"
+    ),
+    Service(
+        user_id=3,
+        service_category_id=3,#Albanileria
+        approved=True,
+        title="Reparación de grietas en el techo",
+        description="Resuelve problemas de filtraciones y deterioro con la reparación profesional de grietas en el techo.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="08:00",
+        availability_time_end="19:00",
+        availability_days="Miercoles,Viernes"
+    ),
+    Service(
+        user_id=3,
+        service_category_id=4,#Carpinteria
+        approved=True,
+        title="Fabricación de muebles a medida para cocina",
+        description="Optimiza tu espacio y estilo con muebles personalizados para tu cocina, creados con habilidad artesanal.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="08:00",
+        availability_time_end="19:00",
+        availability_days="Miercoles,Viernes"
+    ),
+    Service(
+        user_id=3,
+        service_category_id=5,#Gasista
+        approved=True,
+        title="Instalación de cañerías de gas para cocina",
+        description="Asegura una instalación segura y eficiente de cañerías de gas en tu cocina para un funcionamiento óptimo.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="07:00",
+        availability_time_end="16:00",
+        availability_days="Lunes,Martes,Jueves"
+    ),
+    Service(
+        user_id=3,
+        service_category_id=6,#Mecanico
+        approved=True,
+        title="Reparación de sistema de frenos",
+        description="Garantiza tu seguridad en la carretera con una reparación completa y precisa del sistema de frenos de tu vehículo.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="07:00",
+        availability_time_end="16:00",
+        availability_days="Lunes,Martes,Jueves"
+    ),
+    Service(
+        user_id=4,
+        service_category_id=16,#Abogados
+        approved=True,
+        title="Asesoramiento legal en casos de divorcio",
+        description="Orientación experta para enfrentar los desafíos legales durante un proceso de divorcio.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="08:00",
+        availability_time_end="18:00",
+        availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
+    ),
+    Service(
+        user_id=5,
+        service_category_id=7,#Electricista
+        approved=True,
+        title="Instalación de sistema de iluminación LED en hogar",
+        description="Ahorra energía y moderniza tu hogar con la instalación de un sistema de iluminación LED eficiente.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="10:00",
+        availability_time_end="18:00",
+        availability_days="Lunes,Miercoles,Viernes"
+    ),
+    Service(
+        user_id=5,
+        service_category_id=8,#Cerrajeria
+        approved=True,
+        title="Duplicado de llaves para puerta principal",
+        description="Evita contratiempos con un duplicado rápido y preciso de tus llaves principales realizado por cerrajeros expertos.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="10:00",
+        availability_time_end="18:00",
+        availability_days="Martes"
+    ),
+    Service(
+        user_id=5,
+        service_category_id=9,#Reparacion de electrodomesticos
+        approved=True,
+        title="Reparación de lavadora con problemas de centrifugado",
+        description="Devuelve el funcionamiento óptimo a tu lavadora con una reparación profesional de problemas de centrifugado.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="10:00",
+        availability_time_end="18:00",
+        availability_days="Jueves"
+    ),
+     Service(
+        user_id=6,
+        service_category_id=12,#Decoracion de interiores
+        approved=True,
+        title="Asesoramiento en selección de colores y mobiliario para renovar tu hogar",
+        description="Obtén recomendaciones profesionales sobre colores, muebles y accesorios para renovar y revitalizar tu hogar de acuerdo a tus gustos y necesidades.",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        availability_time_start="14:00",
+        availability_time_end="18:00",
+        availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
+    ),
 ]
 
 
