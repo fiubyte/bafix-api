@@ -23,7 +23,7 @@ class UserBase(SQLModel):
 
 class User(UserBase, table=True):
     id: Optional[int] = Field(primary_key=True)
-    password: Optional[str] = Field(max_length=256, min_length=6)
+    password: Optional[str] = Field(max_length=256, min_length=5)
     created_at: datetime.datetime = datetime.datetime.now()
     approved: bool = False
     roles: Optional[str] = Role.USER.value + ',' + Role.PROVIDER.value
@@ -54,6 +54,7 @@ class UserInput(UserBase):
 class UserLogin(SQLModel):
     email: str = "admin@example.com"
     password: str = "admin"
+    google_id_token: Optional[str]
 
 
 class UserUpdate(SQLModel):
