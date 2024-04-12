@@ -1,6 +1,10 @@
+import json
+import os
 from typing import Any
 
+import firebase_admin
 from fastapi import APIRouter, Depends, HTTPException
+from firebase_admin import auth, credentials
 from sqlmodel import Session
 
 from ..auth import auth_handler
@@ -16,9 +20,8 @@ router = APIRouter(
 )
 
 # Requires the env variable GOOGLE_APPLICATION_CREDENTIALS. See: https://firebase.google.com/docs/admin/setup
-# Uncomment this
-# firebase_credentials = credentials.Certificate(json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS']))
-# bafix_firebase_app = firebase_admin.initialize_app(firebase_credentials)
+firebase_credentials = credentials.Certificate(json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS']))
+bafix_firebase_app = firebase_admin.initialize_app(firebase_credentials)
 
 
 @router.post("/login", response_model=Any)
@@ -36,7 +39,9 @@ def login(user: UserLogin, session: Session = Depends(get_session)):
         return {'token': token}
     else:
         # Google/Firebase auth
-        # decoded_token = auth.verify_id_token(user.google_id_token) # Uncomment this
+        print('Attempting to verify google id token')
+        decoded_token = auth.verify_id_token(user.google_id_token)
+        print('Google id token verified successfully')
         # decoded_token['uid']
         # From this point on we confirm it's authenticated
         user_to_upsert = user_found
