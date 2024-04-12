@@ -46,11 +46,11 @@ def login(user: UserLogin, session: Session = Depends(get_session)):
         # From this point on we confirm it's authenticated
         user_to_upsert = user_found
         if not user_to_upsert:
-            user_to_upsert = User(email=user.email, roles=Role.USER)
+            user_to_upsert = User(email=user.email, roles=Role.USER.value)
             save_user(session, user_to_upsert)
         else:
-            if not Role.USER in user_to_upsert.roles:
-                user_to_upsert.roles = user_to_upsert.roles.append(',' + Role.USER)
+            if not Role.USER.value in user_to_upsert.roles:
+                user_to_upsert.roles = user_to_upsert.roles.append(',' + Role.USER.value)
                 update_user(session, user_to_upsert)
         token = auth_handler.encode_token(user_to_upsert.email, user_to_upsert.roles)
         return {'token': token}
