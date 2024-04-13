@@ -20,7 +20,7 @@ router = APIRouter(
 )
 
 # Requires the env variable GOOGLE_APPLICATION_CREDENTIALS. See: https://firebase.google.com/docs/admin/setup
-firebase_credentials = credentials.Certificate('/code/app/ba-fix-firebase-adminsdk.json')
+firebase_credentials = credentials.Certificate(json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS']))
 bafix_firebase_app = firebase_admin.initialize_app(firebase_credentials)
 
 @router.post("/login", response_model=Any)

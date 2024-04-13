@@ -17,7 +17,8 @@ if os.getenv('ENV', 'local') == 'local':
     print("Connected to local BA Fix DB")
 else:
     db_url = "postgresql://{}:{}@{}:{}/{}".format(
-        "bafix", os.environ['DB_PASSWORD'], "dpg-coc6svgl5elc739ob64g-a.oregon-postgres.render.com", 5432, "bafix_db_9tkt"
+        "bafix", os.environ['DB_PASSWORD'], "dpg-coc6svgl5elc739ob64g-a.oregon-postgres.render.com", 5432,
+        "bafix_db_9tkt"
     )
     engine = create_engine(db_url, echo=True)
     print("Connected to remote BA Fix DB")
@@ -32,23 +33,23 @@ def drop_db():
 
 
 users = [
-    # User(
-    #     email="admin@example.com",
-    #     password=auth_handler.get_password_hash("admin"),
-    #     roles=Role.ADMIN.value,
-    #     approved=True,
-    #     name="admin",
-    #     surname="admin",
-    #     profile_photo_url="https://blogs.unitec.mx/hubfs/287524/Imported_Blog_Media/diferencias-entre-un-jefe-y-un-lider-00-Dec-17-2022-09-00-11-1661-PM.jpg",
-    #     document_number="45201921",
-    #     street="Av. Corrientes",
-    #     street_number="1368",
-    #     address_lat="-34.60408967755102",
-    #     address_long="-58.38604247551021",
-    #     postal_code='1416',
-    #     max_radius=2.0,
-    #     phone_number="+5491140298321"
-    # ),
+    User(
+        email="admin@example.com",
+        password=auth_handler.get_password_hash("admin"),
+        roles=Role.ADMIN.value,
+        approved=True,
+        name="admin",
+        surname="admin",
+        profile_photo_url="https://blogs.unitec.mx/hubfs/287524/Imported_Blog_Media/diferencias-entre-un-jefe-y-un-lider-00-Dec-17-2022-09-00-11-1661-PM.jpg",
+        document_number="45201921",
+        street="Av. Corrientes",
+        street_number="1368",
+        address_lat="-34.60408967755102",
+        address_long="-58.38604247551021",
+        postal_code='1416',
+        max_radius=2.0,
+        phone_number="+5491140298321"
+    ),
     User(
         email="jbenavidez@gmail.com",
         password=auth_handler.get_password_hash("jbenavidez"),
@@ -117,7 +118,7 @@ users = [
         max_radius=1,
         phone_number="+5491174485662"
     ),
-        User(
+    User(
         email="cpasaft@gmail.com",
         password=auth_handler.get_password_hash("cpasaft"),
         roles=Role.USER.value,
@@ -205,7 +206,7 @@ service_categories = [
 
 services = [
     Service(
-        user_id=1,
+        user_id=2,
         service_category_id=1,
         approved=True,
         title="Reparación de cañerías y destapaciones",
@@ -217,7 +218,7 @@ services = [
     ),
     Service(
         user_id=2,
-        service_category_id=14,#Pedicuría/Manicuría
+        service_category_id=14,  #Pedicuría/Manicuría
         approved=False,
         title="Pedicura completa con esmaltado permanente",
         description="Disfruta de pies hermosos y bien cuidados con una pedicura de alta calidad que incluye esmaltado duradero.",
@@ -228,7 +229,7 @@ services = [
     ),
     Service(
         user_id=2,
-        service_category_id=15,#Peluqueria
+        service_category_id=15,  #Peluqueria
         approved=False,
         title="Tratamiento de keratina para cabello dañado",
         description="Restaura la salud y el brillo de tu cabello con un tratamiento de keratina profesional.",
@@ -239,7 +240,7 @@ services = [
     ),
     Service(
         user_id=3,
-        service_category_id=1,#Plomeria
+        service_category_id=1,  #Plomeria
         approved=True,
         title="Reparación de cañerías de agua caliente",
         description="Solución rápida para problemas de fugas o averías en las tuberías de agua caliente de tu hogar.",
@@ -250,7 +251,7 @@ services = [
     ),
     Service(
         user_id=3,
-        service_category_id=2,#Pintureria
+        service_category_id=2,  #Pintureria
         approved=True,
         title="Pintura de interiores",
         description="Renueva tus espacios con una nueva capa de pintura para tu habitación, agregando frescura y estilo.",
@@ -261,7 +262,7 @@ services = [
     ),
     Service(
         user_id=3,
-        service_category_id=3,#Albanileria
+        service_category_id=3,  #Albanileria
         approved=True,
         title="Reparación de grietas en el techo",
         description="Resuelve problemas de filtraciones y deterioro con la reparación profesional de grietas en el techo.",
@@ -272,7 +273,7 @@ services = [
     ),
     Service(
         user_id=3,
-        service_category_id=4,#Carpinteria
+        service_category_id=4,  #Carpinteria
         approved=True,
         title="Fabricación de muebles a medida para cocina",
         description="Optimiza tu espacio y estilo con muebles personalizados para tu cocina, creados con habilidad artesanal.",
@@ -283,7 +284,7 @@ services = [
     ),
     Service(
         user_id=3,
-        service_category_id=5,#Gasista
+        service_category_id=5,  #Gasista
         approved=True,
         title="Instalación de cañerías de gas para cocina",
         description="Asegura una instalación segura y eficiente de cañerías de gas en tu cocina para un funcionamiento óptimo.",
@@ -294,7 +295,7 @@ services = [
     ),
     Service(
         user_id=3,
-        service_category_id=6,#Mecanico
+        service_category_id=6,  #Mecanico
         approved=True,
         title="Reparación de sistema de frenos",
         description="Garantiza tu seguridad en la carretera con una reparación completa y precisa del sistema de frenos de tu vehículo.",
@@ -305,7 +306,7 @@ services = [
     ),
     Service(
         user_id=4,
-        service_category_id=16,#Abogados
+        service_category_id=16,  #Abogados
         approved=True,
         title="Asesoramiento legal en casos de divorcio",
         description="Orientación experta para enfrentar los desafíos legales durante un proceso de divorcio.",
@@ -316,7 +317,7 @@ services = [
     ),
     Service(
         user_id=5,
-        service_category_id=7,#Electricista
+        service_category_id=7,  #Electricista
         approved=True,
         title="Instalación de sistema de iluminación LED en hogar",
         description="Ahorra energía y moderniza tu hogar con la instalación de un sistema de iluminación LED eficiente.",
@@ -327,7 +328,7 @@ services = [
     ),
     Service(
         user_id=5,
-        service_category_id=8,#Cerrajeria
+        service_category_id=8,  #Cerrajeria
         approved=True,
         title="Duplicado de llaves para puerta principal",
         description="Evita contratiempos con un duplicado rápido y preciso de tus llaves principales realizado por cerrajeros expertos.",
@@ -338,7 +339,7 @@ services = [
     ),
     Service(
         user_id=5,
-        service_category_id=9,#Reparacion de electrodomesticos
+        service_category_id=9,  #Reparacion de electrodomesticos
         approved=True,
         title="Reparación de lavadora con problemas de centrifugado",
         description="Devuelve el funcionamiento óptimo a tu lavadora con una reparación profesional de problemas de centrifugado.",
@@ -347,9 +348,9 @@ services = [
         availability_time_end="18:00",
         availability_days="Jueves"
     ),
-     Service(
+    Service(
         user_id=6,
-        service_category_id=12,#Decoracion de interiores
+        service_category_id=12,  #Decoracion de interiores
         approved=True,
         title="Asesoramiento en selección de colores y mobiliario para renovar tu hogar",
         description="Obtén recomendaciones profesionales sobre colores, muebles y accesorios para renovar y revitalizar tu hogar de acuerdo a tus gustos y necesidades.",
