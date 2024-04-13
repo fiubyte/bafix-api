@@ -1,6 +1,7 @@
 from sqlmodel import Session, select
 
-from ..models.services import Service,User
+from ..models.service_categories import ServiceCategory
+from ..models.services import Service, User
 from sqlalchemy import or_, and_, func, Float, cast
 
 
@@ -23,24 +24,25 @@ def save_service(session: Session, service: Service):
     return service
 
 
-def get_filtered_services(session: Session, category_ids, user_ids, days, distance, user_lat, user_long, check_time, roles):
-    
+def get_filtered_services(session: Session, category_ids, user_ids, days, distance, user_lat, user_long, check_time,
+                          roles):
     distance_expression = (
-        6371 * func.acos(
-            func.cos(func.radians(user_lat)) *
-            func.cos(func.radians(User.address_lat)) *
-            func.cos(func.radians(User.address_long) - func.radians(user_long)) +
-            func.sin(func.radians(user_lat)) *
-            func.sin(func.radians(User.address_lat))
-        )
+            6371 * func.acos(
+        func.cos(func.radians(user_lat)) *
+        func.cos(func.radians(User.address_lat)) *
+        func.cos(func.radians(User.address_long) - func.radians(user_long)) +
+        func.sin(func.radians(user_lat)) *
+        func.sin(func.radians(User.address_lat))
+    )
     )
 
     query = session.query(
-        Service,    
-        User.address_lat, 
+        Service,
+        ServiceCategory,
+        User.address_lat,
         User.address_long,
         distance_expression.label('distance')
-    ).join(User, Service.user_id == User.id)
+    ).join(User, Service.user_id == User.id).join(ServiceCategory, ServiceCategory.id == Service.service_category_id)
 
     conditions = []
 
@@ -51,15 +53,15 @@ def get_filtered_services(session: Session, category_ids, user_ids, days, distan
     if days:
         day_conditions = [Service.availability_days.contains(day) for day in days]
         conditions.append(or_(*day_conditions))
-    
+
     if check_time:
         conditions.append(and_(
             Service.availability_time_start <= check_time,
             Service.availability_time_end >= check_time
-    ))
+        ))
     if roles == "USER":
         conditions.append(Service.approved == True)
-    
+
     # distance_filter = (
     # func.acos(
     #     func.sin(func.radians(cast(User.address_lat, Float))) * func.sin(func.radians(user_lat)) +

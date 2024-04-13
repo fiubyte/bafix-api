@@ -125,6 +125,9 @@ def get_services(
         "availability_days": service.availability_days,
         "service_latitude": user_address_lat,  
         "service_longitude": user_address_long,
-    }) for service, user_address_lat, user_address_long, distance in services]
+        "service_category_id": service_category.id,
+        "service_category_title": service_category.title,
+        "service_category_description": service_category.description
+    }) for service, service_category, user_address_lat, user_address_long, distance in services]
 
     return response_models
