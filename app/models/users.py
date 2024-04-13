@@ -35,6 +35,7 @@ class User(UserBase, table=True):
 class UserRead(UserBase):
     id: int
     created_at: datetime.datetime
+    approved: bool
     services: list
     address_lat: Optional[str]
     address_long: Optional[str]

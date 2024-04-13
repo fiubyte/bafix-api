@@ -21,6 +21,5 @@ typing_extensions==4.8.0
 pydantic[email]
 segno
 psycopg2-binary
-user-agents
 requests
 firebase-admin

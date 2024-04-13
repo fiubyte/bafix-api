@@ -2,7 +2,6 @@ from typing import Annotated, Union
 
 from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlmodel import Session
-from user_agents import parse
 
 from ..auth import auth_handler
 from ..clients.geoapify import get_coordinates_from_address
@@ -32,25 +31,17 @@ def get_user(
     return user
 
 
+# Only the web users are registered from this endpoint. The mobile users are upserted from /auth/login
 @router.post("/", status_code=201, response_model=UserRead, description='Register a new user')
 def create_user(
         user: UserInput,
         session: Session = Depends(get_session),
-        user_agent: Annotated[Union[str, None], Header()] = None
 ):
-    user_agent_parsed = parse(user_agent)
     role_to_create = Role.PROVIDER.value
-    if user_agent_parsed.is_mobile:
-        role_to_create = Role.USER.value
-
-    users = select_all_users(session)
-    user_to_upsert = None
-
-    for u in users:
-        if u.email == user.email:
-            if role_to_create in u.roles:
-                raise HTTPException(status_code=400, detail='Email is taken')
-            user_to_upsert = u
+    user_found = find_user(session, user.email)
+    if role_to_create in user_found.roles:
+        raise HTTPException(status_code=400, detail='Email is taken')
+    user_to_upsert = user_found
 
     address_lat, address_long = get_coordinates_from_address(user.street, user.street_number)
     hashed_pwd = auth_handler.get_password_hash(user.password)
@@ -63,9 +54,21 @@ def create_user(
                               address_lat=address_lat, address_long=address_long, max_radius=user.max_radius,
                               phone_number=user.phone_number)
     else:
-        # Upsert: previous user, merge the data
+        # Upsert: previous user created from mobile, merge the data
         user_to_upsert.roles = user_to_upsert.roles + ',' + role_to_create
-        # TODO: google login fields
+        user_to_upsert.password = hashed_pwd
+        user_to_upsert.name = user.name
+        user_to_upsert.surname = user.surname
+        user_to_upsert.approved = False
+        user_to_upsert.profile_photo_url = user.profile_photo_url
+        user_to_upsert.document_number = user.document_number
+        user_to_upsert.street = user.street
+        user_to_upsert.street_number = user.street_number
+        user_to_upsert.postal_code = user.postal_code
+        user_to_upsert.address_lat = address_lat
+        user_to_upsert.address_long = address_long
+        user_to_upsert.max_radius = user.max_radius
+        user_to_upsert.phone_number = user.phone_number
 
     session.add(user_to_upsert)
     session.commit()
