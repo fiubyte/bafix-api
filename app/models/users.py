@@ -16,7 +16,7 @@ class UserBase(SQLModel):
     street: Optional[str] = ""
     street_number: Optional[str] = ""
     postal_code: Optional[str] = ""
-    max_radius: Optional[int] = None
+    max_radius: Optional[float] = 0.0
     phone_number: Optional[str] = ""
     # google_id?
 

@@ -38,6 +38,11 @@ class AuthHandler:
     def auth_wrapper(self,
                      auth: HTTPAuthorizationCredentials = Security(security)):
         return self.decode_token(auth.credentials)
+    
+    def get_roles_from_token(self, token):
+        token_str = token.credentials if hasattr(token, 'credentials') else token
+        payload = jwt.decode(token_str, self.secret, algorithms=['HS256'])
+        return payload.get('roles', [])
 
 
 auth_handler = AuthHandler()

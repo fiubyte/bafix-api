@@ -32,23 +32,23 @@ def drop_db():
 
 
 users = [
-    User(
-        email="admin@example.com",
-        password=auth_handler.get_password_hash("admin"),
-        roles=Role.ADMIN.value,
-        approved=True,
-        name="admin",
-        surname="admin",
-        profile_photo_url="https://blogs.unitec.mx/hubfs/287524/Imported_Blog_Media/diferencias-entre-un-jefe-y-un-lider-00-Dec-17-2022-09-00-11-1661-PM.jpg",
-        document_number="45201921",
-        street="Av. Corrientes",
-        street_number="1368",
-        address_lat="-34.60408967755102",
-        address_long="-58.38604247551021",
-        postal_code='1416',
-        max_radius="2",
-        phone_number="+5491140298321"
-    ),
+    # User(
+    #     email="admin@example.com",
+    #     password=auth_handler.get_password_hash("admin"),
+    #     roles=Role.ADMIN.value,
+    #     approved=True,
+    #     name="admin",
+    #     surname="admin",
+    #     profile_photo_url="https://blogs.unitec.mx/hubfs/287524/Imported_Blog_Media/diferencias-entre-un-jefe-y-un-lider-00-Dec-17-2022-09-00-11-1661-PM.jpg",
+    #     document_number="45201921",
+    #     street="Av. Corrientes",
+    #     street_number="1368",
+    #     address_lat="-34.60408967755102",
+    #     address_long="-58.38604247551021",
+    #     postal_code='1416',
+    #     max_radius=2.0,
+    #     phone_number="+5491140298321"
+    # ),
     User(
         email="jbenavidez@gmail.com",
         password=auth_handler.get_password_hash("jbenavidez"),
@@ -63,7 +63,7 @@ users = [
         address_lat="-34.609215881245625",
         address_long="-58.420097140506904",
         postal_code='1177',
-        max_radius="0.8",
+        max_radius=0.8,
         phone_number="+5491132528746"
     ),
     User(
@@ -80,7 +80,7 @@ users = [
         address_lat="-34.60840982966",
         address_long="-58.38257618714883",
         postal_code='1033',
-        max_radius="2.5",
+        max_radius=2.5,
         phone_number="+5491145786596"
     ),
     User(
@@ -97,7 +97,7 @@ users = [
         address_lat="-34.58594398110941",
         address_long="-58.398505915985815",
         postal_code='1425',
-        max_radius="11",
+        max_radius=11,
         phone_number="+5491114562258"
     ),
     User(
@@ -114,7 +114,7 @@ users = [
         address_lat="-34.54519480487854",
         address_long="-58.48203388715096",
         postal_code='1429',
-        max_radius="1",
+        max_radius=1,
         phone_number="+5491174485662"
     ),
         User(
@@ -131,7 +131,7 @@ users = [
         address_lat="-34.6464564623936",
         address_long="-58.38277346103068",
         postal_code='1277',
-        max_radius="2.5",
+        max_radius=2.5,
         phone_number="+5491124546856"
     )
 ]
@@ -218,7 +218,7 @@ services = [
     Service(
         user_id=2,
         service_category_id=14,#Pedicuría/Manicuría
-        approved=True,
+        approved=False,
         title="Pedicura completa con esmaltado permanente",
         description="Disfruta de pies hermosos y bien cuidados con una pedicura de alta calidad que incluye esmaltado duradero.",
         photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
@@ -229,7 +229,7 @@ services = [
     Service(
         user_id=2,
         service_category_id=15,#Peluqueria
-        approved=True,
+        approved=False,
         title="Tratamiento de keratina para cabello dañado",
         description="Restaura la salud y el brillo de tu cabello con un tratamiento de keratina profesional.",
         photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",

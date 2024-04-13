@@ -2,18 +2,26 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
+from fastapi import Query
+from typing import Optional
+from ..auth import AuthHandler
+from fastapi.security import HTTPBearer
+
+
 
 from ..dependencies import UserDependency, get_session
 from ..models.helpers import set_attrs_from_dict
-from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate
+from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service
 from ..repositories.user_repository import find_user_by_id
+from ..repositories.service import get_filtered_services
 
 router = APIRouter(
     prefix="/services",
     tags=["services"],
     responses={404: {"description": "Not found"}},
 )
+security = HTTPBearer()
 
 
 @router.get("/", response_model=List[ServiceRead])
@@ -87,3 +95,36 @@ def create_service(
     new_service.approved = False
     save_service(session, new_service)
     return new_service
+
+
+@router.get("/filter/", response_model=List[ServiceResponseModel])
+def get_services(
+    category_ids: Optional[List[int]] = Query(None, description="IDs de las categorías a filtrar"),
+    user_ids: Optional[List[int]] = Query(None, description="IDs de los usuarios a filtrar"),
+    days: Optional[List[str]] = Query(None, description="Días de la semana a filtrar"),
+    distance: Optional[float] = Query(1.0, description="Distancia máxima en Km"),
+    user_lat: float = Query(-34.5824, description="Latitud del usuario"),
+    user_long: float = Query(-58.4225, description="Longitud del usuario"),
+    check_time: Optional[str] = Query(None, description="Hora a chequear disponibilidad (HH:MM)"),
+    token: str = Depends(security),
+    session: Session = Depends(get_session)
+):
+    auth_handler = AuthHandler()
+    roles = auth_handler.get_roles_from_token(token)
+    print(roles)
+
+    services = get_filtered_services(session, category_ids, user_ids, days, distance, user_lat, user_long, check_time, roles)
+    
+    response_models = [ServiceResponseModel(**{
+        "id": service.id,
+        "title": service.title,
+        "description": service.description,
+        "photo_url": service.photo_url,
+        "availability_time_start": service.availability_time_start,
+        "availability_time_end": service.availability_time_end,
+        "availability_days": service.availability_days,
+        "service_latitude": user_address_lat,  
+        "service_longitude": user_address_long,
+    }) for service, user_address_lat, user_address_long, distance in services]
+
+    return response_models

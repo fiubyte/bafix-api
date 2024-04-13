@@ -1,7 +1,8 @@
 from typing import Optional, Any
 
-from pydantic import validator
+from pydantic import validator, BaseModel
 from sqlmodel import Field, SQLModel, Relationship
+
 
 from app.models.service_categories import ServiceCategory
 from app.models.users import User, UserRead
@@ -46,3 +47,14 @@ class ServiceRead(ServiceBase):
 
 class ServiceUpdate(ServiceBase):
     pass
+
+class ServiceResponseModel(BaseModel):
+    id: int
+    title: str
+    description: str
+    photo_url: str
+    availability_time_start: str
+    availability_time_end: str
+    availability_days: str
+    service_latitude: Optional[str] = None 
+    service_longitude: Optional[str] = None  
