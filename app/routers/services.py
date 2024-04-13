@@ -123,11 +123,16 @@ def get_services(
         "availability_time_start": service.availability_time_start,
         "availability_time_end": service.availability_time_end,
         "availability_days": service.availability_days,
-        "service_latitude": user_address_lat,  
-        "service_longitude": user_address_long,
+        "service_latitude": user.address_lat,
+        "service_longitude": user.address_long,
         "service_category_id": service_category.id,
         "service_category_title": service_category.title,
-        "service_category_description": service_category.description
-    }) for service, service_category, user_address_lat, user_address_long, distance in services]
+        "service_category_description": service_category.description,
+        "user_id": user.id,
+        "user_name": user.name,
+        "user_surname": user.surname,
+        "user_profile_photo_url": user.profile_photo_url,
+        "user_phone_number": user.phone_number,
+    }) for service, service_category, user, distance in services]
 
     return response_models

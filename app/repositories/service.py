@@ -39,8 +39,7 @@ def get_filtered_services(session: Session, category_ids, user_ids, days, distan
     query = session.query(
         Service,
         ServiceCategory,
-        User.address_lat,
-        User.address_long,
+        User,
         distance_expression.label('distance')
     ).join(User, Service.user_id == User.id).join(ServiceCategory, ServiceCategory.id == Service.service_category_id)
 

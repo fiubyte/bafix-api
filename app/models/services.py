@@ -61,4 +61,9 @@ class ServiceResponseModel(BaseModel):
     service_category_id: int
     service_category_title: str
     service_category_description: str
+    user_id: int
+    user_name: str
+    user_surname: str
+    user_profile_photo_url: str
+    user_phone_number: str
 
