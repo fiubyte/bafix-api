@@ -107,7 +107,7 @@ users = [
         roles=Role.USER.value,
         approved=True,
         name="Nadia",
-        surname="Perez",
+        surname="Pérez",
         profile_photo_url="https://media.licdn.com/dms/image/D4D03AQEW4x_hKWsXCw/profile-displayphoto-shrink_800_800/0/1679593696220?e=2147483647&v=beta&t=2fyjlrCniINcZDLkO1Tucv_ca3f2RRjMfmgQi05L0pU",
         document_number="38554211",
         street="Arias",
@@ -207,22 +207,11 @@ service_categories = [
 services = [
     Service(
         user_id=2,
-        service_category_id=1,
-        approved=True,
-        title="Reparación de cañerías y destapaciones",
-        description="Servicios de cañerías, destapaciones, plomería en general",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
-        availability_time_start="9:00",
-        availability_time_end="19:00",
-        availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
-    ),
-    Service(
-        user_id=2,
         service_category_id=14,  #Pedicuría/Manicuría
         approved=False,
         title="Pedicura completa con esmaltado permanente",
         description="Disfruta de pies hermosos y bien cuidados con una pedicura de alta calidad que incluye esmaltado duradero.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://cuponassets.cuponatic-latam.com/backendCl/uploads/imagenes_descuentos/122441/c54ca51efae45d8c62a7472bf0680442679feb96.XL2.jpg",
         availability_time_start="8:00",
         availability_time_end="19:00",
         availability_days="Lunes,Jueves"
@@ -233,7 +222,7 @@ services = [
         approved=False,
         title="Tratamiento de keratina para cabello dañado",
         description="Restaura la salud y el brillo de tu cabello con un tratamiento de keratina profesional.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP8kKT3GhVr3rd9avyBSv2exwgdYkGvVWNOy1rJT0Sdw&s",
         availability_time_start="15:00",
         availability_time_end="20:00",
         availability_days="Martes,Jueves,Viernes"
@@ -244,7 +233,7 @@ services = [
         approved=True,
         title="Reparación de cañerías de agua caliente",
         description="Solución rápida para problemas de fugas o averías en las tuberías de agua caliente de tu hogar.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://es.statefarm.com/content/dam/sf-library/en-us/secure/legacy/simple-insights/136-home-plumbing-checkup-wide.jpg",
         availability_time_start="07:00",
         availability_time_end="16:00",
         availability_days="Lunes,Martes,Jueves"
@@ -255,7 +244,7 @@ services = [
         approved=True,
         title="Pintura de interiores",
         description="Renueva tus espacios con una nueva capa de pintura para tu habitación, agregando frescura y estilo.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRveAictltnyrRcVuL3lf8odlAADaMV2Xr5WP0-n5Z7Bw&s",
         availability_time_start="08:00",
         availability_time_end="19:00",
         availability_days="Miercoles,Viernes"
@@ -266,7 +255,7 @@ services = [
         approved=True,
         title="Reparación de grietas en el techo",
         description="Resuelve problemas de filtraciones y deterioro con la reparación profesional de grietas en el techo.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://www.cemix.com/wp-content/uploads/2022/10/mejor-sellador-de-grietas-para-techos-.jpg",
         availability_time_start="08:00",
         availability_time_end="19:00",
         availability_days="Miercoles,Viernes"
@@ -277,7 +266,7 @@ services = [
         approved=True,
         title="Fabricación de muebles a medida para cocina",
         description="Optimiza tu espacio y estilo con muebles personalizados para tu cocina, creados con habilidad artesanal.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvboifJL6e4vit3VGPR-RqK0mkLTPsIM0-0y6QLoNh2w&s",
         availability_time_start="08:00",
         availability_time_end="19:00",
         availability_days="Miercoles,Viernes"
@@ -288,7 +277,7 @@ services = [
         approved=True,
         title="Instalación de cañerías de gas para cocina",
         description="Asegura una instalación segura y eficiente de cañerías de gas en tu cocina para un funcionamiento óptimo.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://www.pypesa.com/contenido/fb8a47360_blog_.jpg",
         availability_time_start="07:00",
         availability_time_end="16:00",
         availability_days="Lunes,Martes,Jueves"
@@ -299,7 +288,7 @@ services = [
         approved=True,
         title="Reparación de sistema de frenos",
         description="Garantiza tu seguridad en la carretera con una reparación completa y precisa del sistema de frenos de tu vehículo.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://blog.reparacion-vehiculos.es/hubfs/Im%C3%A1genes_Post/Enero_2016/reparacion_de_frenos.jpg",
         availability_time_start="07:00",
         availability_time_end="16:00",
         availability_days="Lunes,Martes,Jueves"
@@ -310,7 +299,7 @@ services = [
         approved=True,
         title="Asesoramiento legal en casos de divorcio",
         description="Orientación experta para enfrentar los desafíos legales durante un proceso de divorcio.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://abogadoaly.com/wp-content/uploads/2020/03/Depositphotos_190058808_l-2015.jpg",
         availability_time_start="08:00",
         availability_time_end="18:00",
         availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
@@ -321,7 +310,7 @@ services = [
         approved=True,
         title="Instalación de sistema de iluminación LED en hogar",
         description="Ahorra energía y moderniza tu hogar con la instalación de un sistema de iluminación LED eficiente.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://img.freepik.com/fotos-premium/sala-cine-casa-iluminacion-led-colores-hogar-inteligente_916189-435.jpg?w=360",
         availability_time_start="10:00",
         availability_time_end="18:00",
         availability_days="Lunes,Miercoles,Viernes"
@@ -332,7 +321,7 @@ services = [
         approved=True,
         title="Duplicado de llaves para puerta principal",
         description="Evita contratiempos con un duplicado rápido y preciso de tus llaves principales realizado por cerrajeros expertos.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://masencarnacion.s3.us-west-2.amazonaws.com/uploads/public/638/09d/8d5/63809d8d594c3195931735.jpg",
         availability_time_start="10:00",
         availability_time_end="18:00",
         availability_days="Martes"
@@ -343,7 +332,7 @@ services = [
         approved=True,
         title="Reparación de lavadora con problemas de centrifugado",
         description="Devuelve el funcionamiento óptimo a tu lavadora con una reparación profesional de problemas de centrifugado.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://thumbs.dreamstime.com/b/servicio-de-reparacion-lavadora-joven-mujer-reparaci%C3%B3n-trabajador-218463087.jpg",
         availability_time_start="10:00",
         availability_time_end="18:00",
         availability_days="Jueves"
@@ -354,7 +343,7 @@ services = [
         approved=True,
         title="Asesoramiento en selección de colores y mobiliario para renovar tu hogar",
         description="Obtén recomendaciones profesionales sobre colores, muebles y accesorios para renovar y revitalizar tu hogar de acuerdo a tus gustos y necesidades.",
-        photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s",
+        photo_url="https://content.elmueble.com/medio/2024/04/08/salon-moderno-pequeno-con-butacas-puf-y-boveda-catalana_ff8d0a80_00573567_240408153401_600x600.jpg",
         availability_time_start="14:00",
         availability_time_end="18:00",
         availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
