@@ -39,8 +39,9 @@ def create_user(
 ):
     role_to_create = Role.PROVIDER.value
     user_found = find_user(session, user.email)
-    if role_to_create in user_found.roles:
-        raise HTTPException(status_code=400, detail='Email is taken')
+    if user_found:
+        if role_to_create in user_found.roles:
+            raise HTTPException(status_code=400, detail='Email is taken')
     user_to_upsert = user_found
 
     address_lat, address_long = get_coordinates_from_address(user.street, user.street_number)
