@@ -6,6 +6,8 @@ from fastapi import Query
 from typing import Optional
 from ..auth import AuthHandler
 from fastapi.security import HTTPBearer
+from datetime import datetime
+import pytz
 
 
 
@@ -101,20 +103,20 @@ def create_service(
 def get_services(
     category_ids: Optional[List[int]] = Query(None, description="IDs de las categorías a filtrar"),
     user_ids: Optional[List[int]] = Query(None, description="IDs de los usuarios a filtrar"),
-    days: Optional[List[str]] = Query(None, description="Días de la semana a filtrar"),
-    distance: Optional[float] = Query(1.0, description="Distancia máxima en Km"),
-    user_lat: float = Query(-34.5824, description="Latitud del usuario"),
-    user_long: float = Query(-58.4225, description="Longitud del usuario"),
-    check_time: Optional[str] = Query(None, description="Hora a chequear disponibilidad (HH:MM)"),
+    user_lat: Optional[float] = Query(-34.5824, description="Latitud del usuario"),
+    user_long: Optional[float] = Query(-58.4225, description="Longitud del usuario"),
+    ordered_by_distance: Optional[bool] = Query(False, description="Ordenar por distancia"),
+    ordered_by_availability_now: Optional[bool] = Query(False, description="Ordenar por disponibilidad actual"),
     token: str = Depends(security),
     session: Session = Depends(get_session)
 ):
     auth_handler = AuthHandler()
     roles = auth_handler.get_roles_from_token(token)
-    print(roles)
 
-    services = get_filtered_services(session, category_ids, user_ids, days, distance, user_lat, user_long, check_time, roles)
-    
+    services = get_filtered_services(
+        session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles
+    )
+
     response_models = [ServiceResponseModel(**{
         "id": service.id,
         "title": service.title,
@@ -125,14 +127,13 @@ def get_services(
         "availability_days": service.availability_days,
         "service_latitude": user.address_lat,
         "service_longitude": user.address_long,
-        "service_category_id": service_category.id,
-        "service_category_title": service_category.title,
-        "service_category_description": service_category.description,
         "user_id": user.id,
         "user_name": user.name,
         "user_surname": user.surname,
         "user_profile_photo_url": user.profile_photo_url,
         "user_phone_number": user.phone_number,
-    }) for service, service_category, user, distance in services]
+        "distance": distance,
+        "is_available": is_available
+    }) for service, user, distance, is_available in services]
 
     return response_models

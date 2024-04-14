@@ -47,7 +47,7 @@ users = [
         address_lat="-34.60408967755102",
         address_long="-58.38604247551021",
         postal_code='1416',
-        max_radius=2.0,
+        max_radius=10.0,
         phone_number="+5491140298321"
     ),
     User(
@@ -64,7 +64,7 @@ users = [
         address_lat="-34.609215881245625",
         address_long="-58.420097140506904",
         postal_code='1177',
-        max_radius=0.8,
+        max_radius=10.0,
         phone_number="+5491132528746"
     ),
     User(
@@ -81,7 +81,7 @@ users = [
         address_lat="-34.60840982966",
         address_long="-58.38257618714883",
         postal_code='1033',
-        max_radius=2.5,
+        max_radius=10,
         phone_number="+5491145786596"
     ),
     User(
@@ -98,7 +98,7 @@ users = [
         address_lat="-34.58594398110941",
         address_long="-58.398505915985815",
         postal_code='1425',
-        max_radius=11,
+        max_radius=50,
         phone_number="+5491114562258"
     ),
     User(
@@ -212,9 +212,9 @@ services = [
         title="Pedicura completa con esmaltado permanente",
         description="Disfruta de pies hermosos y bien cuidados con una pedicura de alta calidad que incluye esmaltado duradero.",
         photo_url="https://cuponassets.cuponatic-latam.com/backendCl/uploads/imagenes_descuentos/122441/c54ca51efae45d8c62a7472bf0680442679feb96.XL2.jpg",
-        availability_time_start="8:00",
-        availability_time_end="19:00",
-        availability_days="Lunes,Jueves"
+        availability_time_start="00:00",
+        availability_time_end="24:00",
+        availability_days="Lunes,Jueves,Sabado,Domingo"
     ),
     Service(
         user_id=2,
@@ -223,9 +223,9 @@ services = [
         title="Tratamiento de keratina para cabello dañado",
         description="Restaura la salud y el brillo de tu cabello con un tratamiento de keratina profesional.",
         photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP8kKT3GhVr3rd9avyBSv2exwgdYkGvVWNOy1rJT0Sdw&s",
-        availability_time_start="15:00",
-        availability_time_end="20:00",
-        availability_days="Martes,Jueves,Viernes"
+        availability_time_start="00:00",
+        availability_time_end="24:00",
+        availability_days="Martes,Jueves,Viernes,Sabado,Domingo"
     ),
     Service(
         user_id=3,
@@ -234,9 +234,9 @@ services = [
         title="Reparación de cañerías de agua caliente",
         description="Solución rápida para problemas de fugas o averías en las tuberías de agua caliente de tu hogar.",
         photo_url="https://es.statefarm.com/content/dam/sf-library/en-us/secure/legacy/simple-insights/136-home-plumbing-checkup-wide.jpg",
-        availability_time_start="07:00",
-        availability_time_end="16:00",
-        availability_days="Lunes,Martes,Jueves"
+        availability_time_start="00:00",
+        availability_time_end="24:00",
+        availability_days="Lunes,Martes,Jueves,Sabado,Domingo"
     ),
     Service(
         user_id=3,
@@ -311,9 +311,9 @@ services = [
         title="Instalación de sistema de iluminación LED en hogar",
         description="Ahorra energía y moderniza tu hogar con la instalación de un sistema de iluminación LED eficiente.",
         photo_url="https://img.freepik.com/fotos-premium/sala-cine-casa-iluminacion-led-colores-hogar-inteligente_916189-435.jpg?w=360",
-        availability_time_start="10:00",
+        availability_time_start="00:00",
         availability_time_end="18:00",
-        availability_days="Lunes,Miercoles,Viernes"
+        availability_days="Lunes,Miercoles,Viernes,Domingo"
     ),
     Service(
         user_id=5,
@@ -347,7 +347,7 @@ services = [
         availability_time_start="14:00",
         availability_time_end="18:00",
         availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
-    ),
+    )
 ]
 
 
