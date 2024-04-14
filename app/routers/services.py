@@ -107,6 +107,8 @@ def get_services(
     user_long: Optional[float] = Query(-58.4225, description="Longitud del usuario"),
     ordered_by_distance: Optional[bool] = Query(False, description="Ordenar por distancia"),
     ordered_by_availability_now: Optional[bool] = Query(False, description="Ordenar por disponibilidad actual"),
+    availability_filter: Optional[bool] = Query(False, description="Filtrar por disponibilidad"),
+    distance_filter: Optional[float] = Query(50.0, description="Filtrar por distancia en Km"),
     token: str = Depends(security),
     session: Session = Depends(get_session)
 ):
@@ -114,7 +116,7 @@ def get_services(
     roles = auth_handler.get_roles_from_token(token)
 
     services = get_filtered_services(
-        session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles
+        session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles, distance_filter, availability_filter
     )
 
     response_models = [ServiceResponseModel(**{

@@ -38,14 +38,14 @@ def get_current_time_in_buenos_aires():
     now = datetime.datetime.now(timezone)
     return now
 
-def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_distance, ordered_by_availability, user_lat, user_long, roles):
+def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_distance, ordered_by_availability, user_lat, user_long, roles, distance_filter, avaialability_filter):
     now = get_current_time_in_buenos_aires()
     today = get_actual_day(now.strftime("%A"))
     current_time = now.time()
     user_lat = float(user_lat)
     user_long = float(user_long)
 
-    distance_expression = (
+    distance_from_service = (
         6371 * func.acos(
             func.cos(func.radians(user_lat)) *
             func.cos(func.radians(cast(User.address_lat, Float))) *
@@ -64,7 +64,7 @@ def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_d
     query = session.query(
         Service,
         User,
-        distance_expression.label('distance'),
+        distance_from_service.label('distance'),
         availability_condition.label('is_available')
     ).join(User, Service.user_id == User.id)
 
@@ -76,14 +76,18 @@ def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_d
         conditions.append(Service.user_id.in_(user_ids))
     if roles == "USER":
         conditions.append(Service.approved == True)
+    if avaialability_filter:
+        conditions.append(availability_condition)
+    
+    conditions.append(distance_from_service <= distance_filter)
 
     if conditions:
         query = query.filter(*conditions)
 
     if ordered_by_distance and ordered_by_availability:
-        query = query.order_by(desc(availability_condition.label('is_available')), asc(distance_expression.label('distance')))
+        query = query.order_by(desc(availability_condition.label('is_available')), asc(distance_from_service.label('distance')))
     elif ordered_by_distance:
-        query = query.order_by(asc(distance_expression.label('distance')))
+        query = query.order_by(asc(distance_from_service.label('distance')))
     elif ordered_by_availability:
         query = query.order_by(desc(availability_condition.label('is_available')))
     return query.all()
