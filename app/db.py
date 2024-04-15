@@ -134,6 +134,23 @@ users = [
         postal_code='1277',
         max_radius=2.5,
         phone_number="+5491124546856"
+    ),
+    User(
+        email="tbotalla@hotmail.com",
+        password=auth_handler.get_password_hash("tbotalla"),
+        roles=Role.PROVIDER.value,
+        approved=True,
+        name="Tomas",
+        surname="Botalla",
+        profile_photo_url="https://www.shutterstock.com/image-photo/profile-picture-smiling-young-african-260nw-1873784920.jpg",
+        document_number="25216293",
+        street="Av. Cordoba",
+        street_number="4326",
+        address_lat="-34.6464564623936",
+        address_long="-58.38277346103068",
+        postal_code='1414',
+        max_radius=2.5,
+        phone_number="+5491154546856"
     )
 ]
 
