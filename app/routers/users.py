@@ -1,14 +1,12 @@
-from typing import Annotated, Union
-
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 
 from ..auth import auth_handler
 from ..clients.geoapify import get_coordinates_from_address
 from ..dependencies import UserDependency, get_session
 from ..models.enums.roles import Role
-from ..models.users import UserRead, UserInput, User
-from ..repositories.user_repository import select_all_users, find_user, find_user_by_id
+from ..models.users import UserRead, UserInput, User, UserReject
+from ..repositories.user_repository import find_user, find_user_by_id
 
 router = APIRouter(
     prefix="/users",
@@ -60,7 +58,7 @@ def create_user(
         user_to_upsert.password = hashed_pwd
         user_to_upsert.name = user.name
         user_to_upsert.surname = user.surname
-        user_to_upsert.approved = False
+        user_to_upsert.approved = None
         user_to_upsert.profile_photo_url = user.profile_photo_url
         user_to_upsert.document_number = user.document_number
         user_to_upsert.street = user.street
@@ -88,6 +86,26 @@ def approve_user(
         raise HTTPException(status_code=404, detail='User not found')
 
     user.approved = True
+    user.rejected_message = ''
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user
+
+
+@router.post("/{user_id}/reject", status_code=200, response_model=UserRead)
+def reject_user(
+        user_id: int,
+        user_reject: UserReject,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail='User not found')
+
+    user.approved = False
+    user.rejected_message = user_reject.rejected_message
     session.add(user)
     session.commit()
     session.refresh(user)

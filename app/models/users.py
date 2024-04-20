@@ -25,7 +25,8 @@ class User(UserBase, table=True):
     id: Optional[int] = Field(primary_key=True)
     password: Optional[str] = Field(max_length=256, min_length=5)
     created_at: datetime.datetime = datetime.datetime.now()
-    approved: bool = False
+    approved: Optional[bool] = None
+    rejected_message: Optional[str]
     roles: Optional[str] = Role.USER.value + ',' + Role.PROVIDER.value
     services: list["Service"] = Relationship(back_populates="user")
     address_lat: Optional[str] = ""
@@ -35,7 +36,8 @@ class User(UserBase, table=True):
 class UserRead(UserBase):
     id: int
     created_at: datetime.datetime
-    approved: bool
+    approved: Optional[bool]
+    rejected_message: Optional[str]
     services: list
     address_lat: Optional[str]
     address_long: Optional[str]
@@ -60,3 +62,7 @@ class UserLogin(SQLModel):
 
 class UserUpdate(SQLModel):
     email: EmailStr = None
+
+
+class UserReject(SQLModel):
+    rejected_message: Optional[str]
