@@ -29,7 +29,8 @@ class Service(ServiceBase, table=True):
     id: int = Field(default=None, primary_key=True)
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
     user: User = Relationship(back_populates="services")
-    approved: bool = False
+    approved: bool = None
+    rejected_message: Optional[str]
     service_category: ServiceCategory = Relationship()
 
 
@@ -41,11 +42,16 @@ class ServiceRead(ServiceBase):
     id: int
     user: UserRead
     service_category: ServiceCategory
-    approved: bool
+    approved: Optional[bool]
+    rejected_message: Optional[str]
 
 
 class ServiceUpdate(ServiceBase):
     pass
+
+
+class ServiceReject(SQLModel):
+    rejected_message: Optional[str]
 
 
 class ServiceResponseModel(BaseModel):

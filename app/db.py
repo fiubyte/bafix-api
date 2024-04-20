@@ -226,6 +226,7 @@ services = [
         user_id=2,
         service_category_id=14,  #Pedicuría/Manicuría
         approved=False,
+        rejected_message="No cumple con las políticas de la plataforma",
         title="Pedicura completa con esmaltado permanente",
         description="Disfruta de pies hermosos y bien cuidados con una pedicura de alta calidad que incluye esmaltado duradero.",
         photo_url="https://cuponassets.cuponatic-latam.com/backendCl/uploads/imagenes_descuentos/122441/c54ca51efae45d8c62a7472bf0680442679feb96.XL2.jpg",
@@ -237,6 +238,7 @@ services = [
         user_id=2,
         service_category_id=15,  #Peluqueria
         approved=False,
+        rejected_message="No cumple con las políticas de la plataforma",
         title="Tratamiento de keratina para cabello dañado",
         description="Restaura la salud y el brillo de tu cabello con un tratamiento de keratina profesional.",
         photo_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP8kKT3GhVr3rd9avyBSv2exwgdYkGvVWNOy1rJT0Sdw&s",
@@ -346,7 +348,7 @@ services = [
     Service(
         user_id=5,
         service_category_id=9,  #Reparacion de electrodomesticos
-        approved=True,
+        approved=None,
         title="Reparación de lavadora con problemas de centrifugado",
         description="Devuelve el funcionamiento óptimo a tu lavadora con una reparación profesional de problemas de centrifugado.",
         photo_url="https://thumbs.dreamstime.com/b/servicio-de-reparacion-lavadora-joven-mujer-reparaci%C3%B3n-trabajador-218463087.jpg",
@@ -357,7 +359,7 @@ services = [
     Service(
         user_id=6,
         service_category_id=12,  #Decoracion de interiores
-        approved=True,
+        approved=None,
         title="Asesoramiento en selección de colores y mobiliario para renovar tu hogar",
         description="Obtén recomendaciones profesionales sobre colores, muebles y accesorios para renovar y revitalizar tu hogar de acuerdo a tus gustos y necesidades.",
         photo_url="https://content.elmueble.com/medio/2024/04/08/salon-moderno-pequeno-con-butacas-puf-y-boveda-catalana_ff8d0a80_00573567_240408153401_600x600.jpg",

@@ -13,7 +13,7 @@ import pytz
 
 from ..dependencies import UserDependency, get_session
 from ..models.helpers import set_attrs_from_dict
-from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel
+from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service
 from ..repositories.user_repository import find_user_by_id
 from ..repositories.service import get_filtered_services
@@ -81,6 +81,21 @@ def approve_service(
     save_service(session, service)
     return service
 
+@router.post("/{id}/reject", status_code=200, response_model=ServiceRead)
+def reject_service(
+        id: int,
+        service_reject: ServiceReject,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    service.approved = False
+    service.rejected_message = service_reject.rejected_message
+    save_service(session, service)
+    return service
 
 @router.post("/", status_code=201, response_model=ServiceRead)
 def create_service(
@@ -94,7 +109,7 @@ def create_service(
 
     session.add(new_service := Service.from_orm(service))
     new_service.user_id = user.id
-    new_service.approved = False
+    new_service.approved = None
     save_service(session, new_service)
     return new_service
 
