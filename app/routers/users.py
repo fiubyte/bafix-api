@@ -103,6 +103,9 @@ def reject_user(
     user = find_user_by_id(session, user_id)
     if not user:
         raise HTTPException(status_code=404, detail='User not found')
+    for service in user.services:
+        service.approved = False
+        service.rejected_message = user_reject.rejected_message
 
     user.approved = False
     user.rejected_message = user_reject.rejected_message
