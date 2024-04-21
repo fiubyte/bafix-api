@@ -1,8 +1,9 @@
-from typing import Optional, Any
+from typing import Optional
 
 from pydantic import validator, BaseModel
 from sqlmodel import Field, SQLModel, Relationship
 
+from app.models.rates import Rate, RateBase
 from app.models.service_categories import ServiceCategory
 from app.models.users import User, UserRead
 
@@ -29,6 +30,7 @@ class Service(ServiceBase, table=True):
     id: int = Field(default=None, primary_key=True)
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
     user: User = Relationship(back_populates="services")
+    rates: Optional[list[Rate]] = Relationship(back_populates="service")
     approved: bool = None
     rejected_message: Optional[str]
     service_category: ServiceCategory = Relationship()
@@ -38,12 +40,17 @@ class ServiceCreate(ServiceBase):
     pass
 
 
+class ServiceRate(RateBase):
+    pass
+
+
 class ServiceRead(ServiceBase):
     id: int
     user: UserRead
     service_category: ServiceCategory
     approved: Optional[bool]
     rejected_message: Optional[str]
+    rates: list
 
 
 class ServiceUpdate(ServiceBase):
@@ -71,4 +78,3 @@ class ServiceResponseModel(BaseModel):
     user_phone_number: str
     distance: Optional[float] = None
     is_available: Optional[bool] = None
-

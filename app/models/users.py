@@ -18,7 +18,6 @@ class UserBase(SQLModel):
     postal_code: Optional[str] = ""
     max_radius: Optional[float] = 0.0
     phone_number: Optional[str] = ""
-    # google_id?
 
 
 class User(UserBase, table=True):
@@ -29,6 +28,7 @@ class User(UserBase, table=True):
     rejected_message: Optional[str]
     roles: Optional[str] = Role.USER.value + ',' + Role.PROVIDER.value
     services: list["Service"] = Relationship(back_populates="user")
+    user_rates: Optional[list["Rate"]] = Relationship(back_populates="user")
     address_lat: Optional[str] = ""
     address_long: Optional[str] = ""
 

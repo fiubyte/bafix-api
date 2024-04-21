@@ -1,22 +1,20 @@
 from typing import List
+from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session
 from fastapi import Query
-from typing import Optional
-from ..auth import AuthHandler
 from fastapi.security import HTTPBearer
-from datetime import datetime
-import pytz
+from sqlmodel import Session
 
-
-
+from ..auth import AuthHandler
 from ..dependencies import UserDependency, get_session
 from ..models.helpers import set_attrs_from_dict
-from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject
+from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject, ServiceRate
+from ..models.rates import Rate
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service
-from ..repositories.user_repository import find_user_by_id
 from ..repositories.service import get_filtered_services
+from ..repositories.rate import save_rate
+from ..repositories.user_repository import find_user_by_id
 
 router = APIRouter(
     prefix="/services",
@@ -81,6 +79,7 @@ def approve_service(
     save_service(session, service)
     return service
 
+
 @router.post("/{id}/reject", status_code=200, response_model=ServiceRead)
 def reject_service(
         id: int,
@@ -96,6 +95,7 @@ def reject_service(
     service.rejected_message = service_reject.rejected_message
     save_service(session, service)
     return service
+
 
 @router.post("/", status_code=201, response_model=ServiceRead)
 def create_service(
@@ -116,22 +116,23 @@ def create_service(
 
 @router.get("/filter/", response_model=List[ServiceResponseModel])
 def get_services(
-    category_ids: Optional[List[int]] = Query(None, description="IDs de las categorías a filtrar"),
-    user_ids: Optional[List[int]] = Query(None, description="IDs de los usuarios a filtrar"),
-    user_lat: Optional[float] = Query(-34.5824, description="Latitud del usuario"),
-    user_long: Optional[float] = Query(-58.4225, description="Longitud del usuario"),
-    ordered_by_distance: Optional[bool] = Query(False, description="Ordenar por distancia"),
-    ordered_by_availability_now: Optional[bool] = Query(False, description="Ordenar por disponibilidad actual"),
-    availability_filter: Optional[bool] = Query(False, description="Filtrar por disponibilidad"),
-    distance_filter: Optional[float] = Query(50.0, description="Filtrar por distancia en Km"),
-    token: str = Depends(security),
-    session: Session = Depends(get_session)
+        category_ids: Optional[List[int]] = Query(None, description="IDs de las categorías a filtrar"),
+        user_ids: Optional[List[int]] = Query(None, description="IDs de los usuarios a filtrar"),
+        user_lat: Optional[float] = Query(-34.5824, description="Latitud del usuario"),
+        user_long: Optional[float] = Query(-58.4225, description="Longitud del usuario"),
+        ordered_by_distance: Optional[bool] = Query(False, description="Ordenar por distancia"),
+        ordered_by_availability_now: Optional[bool] = Query(False, description="Ordenar por disponibilidad actual"),
+        availability_filter: Optional[bool] = Query(False, description="Filtrar por disponibilidad"),
+        distance_filter: Optional[float] = Query(50.0, description="Filtrar por distancia en Km"),
+        token: str = Depends(security),
+        session: Session = Depends(get_session)
 ):
     auth_handler = AuthHandler()
     roles = auth_handler.get_roles_from_token(token)
 
     services = get_filtered_services(
-        session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles, distance_filter, availability_filter
+        session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles,
+        distance_filter, availability_filter
     )
 
     response_models = [ServiceResponseModel(**{
@@ -154,3 +155,24 @@ def get_services(
     }) for service, user, distance, is_available in services]
 
     return response_models
+
+
+@router.post("/{id}/rate", status_code=200, response_model=ServiceRead)
+def rate_service(
+        id: int,
+        service_rate: ServiceRate,
+        user: UserDependency,
+        session: Session = Depends(get_session)
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message)
+    save_rate(session, rate)
+
+    return service
