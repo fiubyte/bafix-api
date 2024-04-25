@@ -101,23 +101,6 @@ user_3 = User(
     max_radius=50,
     phone_number="+5491114562258"
 )
-user_4 = User(
-    email="amolina@gmail.com",
-    password=auth_handler.get_password_hash("amolina"),
-    roles=Role.USER.value,
-    approved=True,
-    name="Augusto",
-    surname="Molina",
-    profile_photo_url="https://media.licdn.com/dms/image/C4E03AQFebLf0pN9Zng/profile-displayphoto-shrink_200_200/0/1583265319814?e=2147483647&v=beta&t=N432_9aBMwV2DsrVzNoECCc2xXDclrR5b2jACyt_l7M",
-    document_number="14758693",
-    street="Av. Las Heras",
-    street_number="2457",
-    address_lat="-34.58594398110941",
-    address_long="-58.398505915985815",
-    postal_code='1425',
-    max_radius=50,
-    phone_number="+5491114562258"
-)
 provider_1 = User(
     email="nperez@gmail.com",
     password=auth_handler.get_password_hash("nperez"),
