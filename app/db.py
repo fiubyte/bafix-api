@@ -180,12 +180,12 @@ service_categories = [
         description="Servicios de albañilería",
     ),
     ServiceCategory(
-        title="Carpintería",
-        description="Servicios de carpintería",
-    ),
-    ServiceCategory(
         title="Gasista",
         description="Servicios de gas",
+    ),
+    ServiceCategory(
+        title="Carpintería",
+        description="Servicios de carpintería",
     ),
     ServiceCategory(
         title="Mecánico",
@@ -196,12 +196,12 @@ service_categories = [
         description="Servicios de electricidad",
     ),
     ServiceCategory(
-        title="Cerrajería",
-        description="Servicios de cerrajería",
-    ),
-    ServiceCategory(
         title="Reparación de electrodomésticos",
         description="Servicios de reparación de electrodomésticos",
+    ),
+    ServiceCategory(
+        title="Cerrajería",
+        description="Servicios de cerrajería",
     ),
     ServiceCategory(
         title="Instalación de aires acondicionados",
