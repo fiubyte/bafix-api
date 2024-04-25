@@ -6,6 +6,7 @@ from sqlmodel import Field, SQLModel, Relationship
 class RateBase(SQLModel):
     rate: Optional[int]
     message: Optional[str]
+    approved: Optional[bool]
 
 
 class Rate(RateBase, table=True):

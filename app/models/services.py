@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import validator, BaseModel
 from sqlmodel import Field, SQLModel, Relationship
@@ -50,7 +50,7 @@ class ServiceRead(ServiceBase):
     service_category: ServiceCategory
     approved: Optional[bool]
     rejected_message: Optional[str]
-    rates: list
+    rates: List[Rate]
 
 
 class ServiceUpdate(ServiceBase):
