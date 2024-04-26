@@ -9,11 +9,12 @@ from sqlmodel import Session
 from ..auth import AuthHandler
 from ..dependencies import UserDependency, get_session
 from ..models.helpers import set_attrs_from_dict
-from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject, ServiceRate
+from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject, \
+    ServiceRate
 from ..models.rates import Rate
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service
 from ..repositories.service import get_filtered_services
-from ..repositories.rate import save_rate
+from ..repositories.rate import save_rate, find_rate_by_id
 from ..repositories.user_repository import find_user_by_id
 
 router = APIRouter(
@@ -172,7 +173,52 @@ def rate_service(
     if not service:
         raise HTTPException(status_code=404, detail='Service not found')
 
-    rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message)
+    rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message,
+                approved=None)
+    save_rate(session, rate)
+
+    return service
+
+
+@router.post("/{service_id}/rate/{rate_id}/approve", status_code=200, response_model=ServiceRead)
+def approve_rate(
+        service_id: int,
+        rate_id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session)
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, service_id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    rate = find_rate_by_id(session, rate_id)
+    rate.approved = True
+    save_rate(session, rate)
+
+    return service
+
+
+@router.post("/{service_id}/rate/{rate_id}/reject", status_code=200, response_model=ServiceRead)
+def reject_rate(
+        service_id: int,
+        rate_id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session)
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, service_id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    rate = find_rate_by_id(session, rate_id)
+    rate.approved = False
     save_rate(session, rate)
 
     return service
