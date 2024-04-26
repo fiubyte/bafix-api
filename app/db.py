@@ -418,31 +418,43 @@ rates = [
         user=user_1,
         service=service_1,
         rate=4,
-        message="Muy buen sevicio, lo recomiendo pero la próxima espero más puntualidad."
+        message="Muy buen sevicio, lo recomiendo pero la próxima espero más puntualidad.",
+        approved=True
     ),
     Rate(
         user=user_2,
         service=service_2,
         rate=5,
-        message="Muy bueno, recomiendo!"
+        message="Muy bueno, recomiendo!",
+        approved=True
     ),
     Rate(
         user=user_2,
         service=service_3,
         rate=1,
-        message="No vayan, un desastre!"
+        message="No vayan, un desastre!",
+        approved=True
     ),
     Rate(
         user=user_2,
         service=service_4,
         rate=1,
-        message="No vayan, un desastre!!!"
+        message="No vayan, un desastre!!!",
+        approved=True
     ),
     Rate(
         user=user_3,
         service=service_5,
         rate=3,
-        message="Aceptable..."
+        message="Aceptable...",
+        approved=False
+    ),
+    Rate(
+        user=user_3,
+        service=service_4,
+        rate=4,
+        message="Muy buena atención, recomiendo!",
+        approved=None
     ),
 ]
 
