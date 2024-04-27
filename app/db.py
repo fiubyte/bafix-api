@@ -160,7 +160,6 @@ users = [
     user_1,
     user_2,
     user_3,
-    user_4,
     provider_1,
     provider_2,
     provider_3,
