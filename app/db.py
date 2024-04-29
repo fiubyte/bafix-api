@@ -155,6 +155,24 @@ provider_3 = User(
     phone_number="+5491154546856"
 )
 
+provider_4 = User(
+    email="jramirez@hotmail.com",
+    password=auth_handler.get_password_hash("tbotalla"),
+    roles=Role.PROVIDER.value,
+    approved=None,
+    name="Juan",
+    surname="Ramirez",
+    profile_photo_url="https://www.shutterstock.com/image-photo/profile-picture-smiling-young-african-260nw-1873784920.jpg",
+    document_number="25216293",
+    street="Av. Cordoba",
+    street_number="4326",
+    address_lat="-34.6464564623936",
+    address_long="-58.38277346103068",
+    postal_code='1414',
+    max_radius=2.5,
+    phone_number="+5491154546856"
+)
+
 users = [
     user_admin,
     user_1,
@@ -163,6 +181,7 @@ users = [
     provider_1,
     provider_2,
     provider_3,
+    provider_4
 ]
 
 service_categories = [
@@ -378,6 +397,28 @@ service_13 = Service(
     availability_time_end="18:00",
     availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
 )
+service_14 = Service(
+    user_id=7,
+    service_category_id=12,  # Decoracion de interiores
+    approved=None,
+    title="Decoración de interiores para tu hogar",
+    description="Obtén recomendaciones profesionales sobre colores, muebles y accesorios para renovar y revitalizar tu hogar de acuerdo a tus gustos y necesidades.",
+    photo_url="https://content.elmueble.com/medio/2024/04/08/salon-moderno-pequeno-con-butacas-puf-y-boveda-catalana_ff8d0a80_00573567_240408153401_600x600.jpg",
+    availability_time_start="14:00",
+    availability_time_end="18:00",
+    availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
+)
+service_15 = Service(
+    user_id=6,
+    service_category_id=9,  # Reparacion de electrodomesticos
+    approved=None,
+    title="Reparación de aparatos electrónicos",
+    description="Reparación de TVs, Radios, todo tipo de aparatos electrónicos",
+    photo_url="https://content.elmueble.com/medio/2024/04/08/salon-moderno-pequeno-con-butacas-puf-y-boveda-catalana_ff8d0a80_00573567_240408153401_600x600.jpg",
+    availability_time_start="14:00",
+    availability_time_end="18:00",
+    availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
+)
 
 services = [
     service_1,
@@ -392,7 +433,9 @@ services = [
     service_10,
     service_11,
     service_12,
-    service_13
+    service_13,
+    service_14,
+    service_15
 ]
 
 rates = [
