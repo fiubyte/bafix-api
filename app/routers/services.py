@@ -1,5 +1,7 @@
 from typing import List
 from typing import Optional
+from sqlalchemy.exc import IntegrityError
+
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi import Query
@@ -175,6 +177,14 @@ def rate_service(
 
     rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message,
                 approved=None)
+    
+    try:
+        save_rate(session, rate)
+        session.commit()  
+    except IntegrityError:
+        session.rollback()  
+        raise HTTPException(status_code=400, detail="A user can only rate a service once.")
+    
     save_rate(session, rate)
 
     return service
