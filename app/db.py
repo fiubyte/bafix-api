@@ -419,6 +419,17 @@ service_15 = Service(
     availability_time_end="18:00",
     availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
 )
+service_16 = Service(
+    user_id=6,
+    service_category_id=9,  # Reparacion de electrodomesticos
+    approved=None,
+    title="Reparación de electrodomésticos",
+    description="Reparación de TVs, Radios, todo tipo de aparatos electrónicos",
+    photo_url="https://content.elmueble.com/medio/2024/04/08/salon-moderno-pequeno-con-butacas-puf-y-boveda-catalana_ff8d0a80_00573567_240408153401_600x600.jpg",
+    availability_time_start="14:00",
+    availability_time_end="18:00",
+    availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
+)
 
 services = [
     service_1,
@@ -435,7 +446,8 @@ services = [
     service_12,
     service_13,
     service_14,
-    service_15
+    service_15,
+    service_16
 ]
 
 rates = [
