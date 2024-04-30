@@ -3,6 +3,8 @@ from typing import Optional
 from sqlalchemy import UniqueConstraint
 from sqlmodel import Field, SQLModel, Relationship
 
+from pydantic import BaseModel
+
 
 class RateBase(SQLModel):
     rate: Optional[int]
@@ -25,5 +27,9 @@ class Rate(RateBase, table=True):
     approved: Optional[bool]
 
 
-class RateRead(RateBase):
-    approved: Optional[bool]
+class RateRead(BaseModel):
+    message: str
+    user_id: int
+    service_id: int
+    rate: int
+    user_email: str

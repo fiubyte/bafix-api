@@ -13,11 +13,11 @@ from ..dependencies import UserDependency, get_session
 from ..models.helpers import set_attrs_from_dict
 from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject, \
     ServiceRate
-from ..models.rates import Rate
+from ..models.rates import Rate, RateRead
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service
 from ..repositories.service import get_filtered_services
-from ..repositories.rate import save_rate, find_rate_by_id
-from ..repositories.user_repository import find_user_by_id
+from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id
+from ..repositories.user_repository import find_user_by_id,find_user
 
 router = APIRouter(
     prefix="/services",
@@ -232,3 +232,23 @@ def reject_rate(
     save_rate(session, rate)
 
     return service
+
+@router.get("/{service_id}/rate/{user_mail}", status_code=200)
+def get_service_rate(
+        service_id: int,
+        user_mail: str,
+        user: UserDependency,
+        session: Session = Depends(get_session)
+):
+    service = find_service_by_id(session, service_id)
+    
+    user = find_user(session, user_mail)
+    
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    rate = find_rate_by_user_id_and_service_id(session, user.id, service_id)
+    if not rate:
+        raise HTTPException(status_code=404, detail='Rate not found')
+    
+    return rate
