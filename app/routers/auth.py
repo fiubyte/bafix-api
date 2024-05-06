@@ -23,6 +23,7 @@ router = APIRouter(
 firebase_credentials = credentials.Certificate(json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS']))
 bafix_firebase_app = firebase_admin.initialize_app(firebase_credentials)
 
+
 @router.post("/login", response_model=Any)
 def login(user: UserLogin, session: Session = Depends(get_session)):
     user_found = find_user(session, user.email)
@@ -34,7 +35,7 @@ def login(user: UserLogin, session: Session = Depends(get_session)):
         if not verified:
             raise HTTPException(status_code=401,
                                 detail='Invalid email and/or password')
-        token = auth_handler.encode_token(user_found.email, user_found.roles)
+        token = auth_handler.encode_token(user_found.id, user_found.email, user_found.roles)
         return {'token': token}
     else:
         # Google/Firebase auth
@@ -51,5 +52,5 @@ def login(user: UserLogin, session: Session = Depends(get_session)):
             if not Role.USER.value in user_to_upsert.roles:
                 user_to_upsert.roles = user_to_upsert.roles.append(',' + Role.USER.value)
                 update_user(session, user_to_upsert)
-        token = auth_handler.encode_token(user_to_upsert.email, user_to_upsert.roles)
+        token = auth_handler.encode_token(user_to_upsert.id, user_to_upsert.email, user_to_upsert.roles)
         return {'token': token}

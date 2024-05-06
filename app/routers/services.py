@@ -2,7 +2,6 @@ from typing import List
 from typing import Optional
 from sqlalchemy.exc import IntegrityError
 
-
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi import Query
 from fastapi.security import HTTPBearer
@@ -14,10 +13,11 @@ from ..models.helpers import set_attrs_from_dict
 from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject, \
     ServiceRate
 from ..models.rates import Rate, RateRead
-from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service
+from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
+    find_average_rate_for_service
 from ..repositories.service import get_filtered_services
 from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id
-from ..repositories.user_repository import find_user_by_id,find_user
+from ..repositories.user_repository import find_user_by_id, find_user
 
 router = APIRouter(
     prefix="/services",
@@ -33,9 +33,14 @@ def get_services(
         session: Session = Depends(get_session),
         mine: bool = False
 ):
+    services = []
     if mine:
-        return find_services_for_user(session, user.id)
-    return find_all_services(session)
+        services = find_services_for_user(session, user.id)
+    services = find_all_services(session)
+    for service in services:
+        service.avg_rate = find_average_rate_for_service(session, service.id)
+
+    return services
 
 
 @router.get("/{service_id}", status_code=200, response_model=ServiceRead)
@@ -47,6 +52,8 @@ def get_service(
     service = find_service_by_id(session, service_id)
     if not service:
         raise HTTPException(status_code=404, detail='Service not found')
+
+    service.avg_rate = find_average_rate_for_service(session, service.id)
 
     return service
 
@@ -148,6 +155,7 @@ def get_services(
         "availability_days": service.availability_days,
         "service_latitude": user.address_lat,
         "service_longitude": user.address_long,
+        "service_avg_rate": find_average_rate_for_service(session, service.id).scalar(),
         "user_id": user.id,
         "user_name": user.name,
         "user_surname": user.surname,
@@ -177,14 +185,14 @@ def rate_service(
 
     rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message,
                 approved=None)
-    
+
     try:
         save_rate(session, rate)
-        session.commit()  
+        session.commit()
     except IntegrityError:
-        session.rollback()  
+        session.rollback()
         raise HTTPException(status_code=400, detail="A user can only rate a service once.")
-    
+
     save_rate(session, rate)
 
     return service
@@ -233,6 +241,7 @@ def reject_rate(
 
     return service
 
+
 @router.get("/{service_id}/rate/{user_mail}", status_code=200)
 def get_service_rate(
         service_id: int,
@@ -241,14 +250,14 @@ def get_service_rate(
         session: Session = Depends(get_session)
 ):
     service = find_service_by_id(session, service_id)
-    
+
     user = find_user(session, user_mail)
-    
+
     if not service:
         raise HTTPException(status_code=404, detail='Service not found')
 
     rate = find_rate_by_user_id_and_service_id(session, user.id, service_id)
     if not rate:
         raise HTTPException(status_code=404, detail='Rate not found')
-    
+
     return rate
