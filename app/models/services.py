@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional, List
 
 from pydantic import validator, BaseModel
@@ -14,6 +15,7 @@ class ServiceBase(SQLModel):
     description: str = "Service description"
     photo_url: Optional[
         str] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-GKiRj33HOaschW6KyQTivS2-IiwUvsYpCov-9AGgw&s"
+    requested_date: datetime = datetime.now()
     availability_time_start: str = "9:00"
     availability_time_end: str = "18:00"
     availability_days: str = "Lunes,Martes,Miercoles,Jueves,Viernes"
