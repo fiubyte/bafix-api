@@ -11,7 +11,7 @@ from ..auth import auth_handler
 from ..dependencies import get_session
 from ..models.enums.roles import Role
 from ..models.users import UserLogin, User
-from ..repositories.user_repository import find_user, save_user, update_user
+from ..repositories.user import find_user, save_user, update_user
 
 router = APIRouter(
     prefix="/auth",

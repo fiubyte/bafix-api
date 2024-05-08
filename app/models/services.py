@@ -4,6 +4,7 @@ from typing import Optional, List
 from pydantic import validator, BaseModel
 from sqlmodel import Field, SQLModel, Relationship
 
+from app.models.favorites import Favorite
 from app.models.rates import Rate, RateBase
 from app.models.service_categories import ServiceCategory
 from app.models.users import User, UserRead
@@ -38,6 +39,7 @@ class Service(ServiceBase, table=True):
     service_category: ServiceCategory = Relationship()
     user: User = Relationship(back_populates="services")
     rates: Optional[list[Rate]] = Relationship(back_populates="service")
+    favorites: Optional[list[Favorite]] = Relationship(back_populates="service")
 
 
 class ServiceCreate(ServiceBase):
@@ -57,6 +59,7 @@ class ServiceRead(ServiceBase):
     service_category: ServiceCategory
     user: UserRead
     rates: List[Rate]
+    favorites: Optional[list[Favorite]]
 
 
 class ServiceUpdate(ServiceBase):

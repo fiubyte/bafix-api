@@ -6,7 +6,7 @@ from sqlmodel import Session
 from .auth import auth_handler
 from .db import engine
 from .models.users import User
-from .repositories.user_repository import find_user
+from .repositories.user import find_user
 
 
 def get_session():

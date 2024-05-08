@@ -6,7 +6,7 @@ from ..clients.geoapify import get_coordinates_from_address
 from ..dependencies import UserDependency, get_session
 from ..models.enums.roles import Role
 from ..models.users import UserRead, UserInput, User, UserReject
-from ..repositories.user_repository import find_user, find_user_by_id
+from ..repositories.user import find_user, find_user_by_id
 
 router = APIRouter(
     prefix="/users",

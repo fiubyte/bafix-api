@@ -13,11 +13,13 @@ from ..models.helpers import set_attrs_from_dict
 from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject, \
     ServiceRate
 from ..models.rates import Rate, RateRead
+from ..models.favorites import Favorite
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
     find_average_rate_for_service, find_user_rate_for_service
 from ..repositories.service import get_filtered_services
 from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id
-from ..repositories.user_repository import find_user_by_id, find_user
+from ..repositories.user import find_user_by_id, find_user
+from ..repositories.favorite import find_favorite_by_user_id_and_service_id, save_favorite, delete_favorite
 
 router = APIRouter(
     prefix="/services",
@@ -263,3 +265,46 @@ def get_service_rate(
         raise HTTPException(status_code=404, detail='Rate not found')
 
     return rate
+
+
+@router.post("/{id}/fav", status_code=200, response_model=ServiceRead)
+def favorite_service(
+        id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session)
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    favorite = find_favorite_by_user_id_and_service_id(session, user.id, service.id)
+    if not favorite:
+        favorite = Favorite(user_id=user.id, service_id=service.id)
+        save_favorite(session, favorite)
+
+    return service
+
+
+@router.post("/{id}/unfav", status_code=200, response_model=ServiceRead)
+def unfavorite_service(
+        id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session)
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    favorite = find_favorite_by_user_id_and_service_id(session, user.id, service.id)
+    if favorite:
+        delete_favorite(session, favorite)
+
+    return service

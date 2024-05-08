@@ -29,6 +29,7 @@ class User(UserBase, table=True):
     roles: Optional[str] = Role.USER.value + ',' + Role.PROVIDER.value
     services: list["Service"] = Relationship(back_populates="user")
     user_rates: Optional[list["Rate"]] = Relationship(back_populates="user")
+    user_favorites: Optional[list["Favorite"]] = Relationship(back_populates="user")
     address_lat: Optional[str] = ""
     address_long: Optional[str] = ""
 
