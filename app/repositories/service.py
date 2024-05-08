@@ -1,5 +1,7 @@
 from sqlmodel import Session, select
 
+from ..dependencies import UserDependency
+from ..models.favorites import Favorite
 from ..models.rates import Rate
 from ..models.services import Service, User
 from sqlalchemy import or_, and_, func, Float, cast, desc, asc, Table
@@ -41,8 +43,9 @@ def get_current_time_in_buenos_aires():
     return now
 
 
-def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_distance, ordered_by_availability,
-                          user_lat, user_long, roles, distance_filter, avaialability_filter):
+def get_filtered_services(user: UserDependency, session: Session, category_ids, user_ids, ordered_by_distance,
+                          ordered_by_availability,
+                          user_lat, user_long, roles, distance_filter, avaialability_filter, faved_only):
     now = get_current_time_in_buenos_aires()
     today = get_actual_day(now.strftime("%A"))
     current_time = now.time()
@@ -72,6 +75,9 @@ def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_d
         availability_condition.label('is_available')
     ).join(User, Service.user_id == User.id)
 
+    if faved_only:
+        query = query.join(Favorite, Service.id == Favorite.service_id)
+
     conditions = []
 
     if category_ids:
@@ -82,6 +88,8 @@ def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_d
         conditions.append(Service.approved == True)
     if avaialability_filter:
         conditions.append(availability_condition)
+    if faved_only:
+        conditions.append(Favorite.user_id == user.id)
 
     conditions.append(distance_from_service <= distance_filter)
 
@@ -105,3 +113,4 @@ def find_average_rate_for_service(session: Session, service_id: int):
 def find_user_rate_for_service(session: Session, service_id: int, user_id: int):
     result = session.query(Rate).filter(Rate.service_id == service_id, Rate.user_id == user_id).first()
     return result.rate if result else None
+

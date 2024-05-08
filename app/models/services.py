@@ -89,3 +89,4 @@ class ServiceResponseModel(BaseModel):
     distance: Optional[float] = None
     is_available: Optional[bool] = None
     own_rate: Optional[float]
+    faved_by_me: Optional[bool]

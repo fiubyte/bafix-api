@@ -3,8 +3,9 @@ import os
 from sqlmodel import SQLModel, create_engine, Session
 
 from .auth import auth_handler
-from .models.rates import Rate
 from .models.enums.roles import Role
+from .models.favorites import Favorite
+from .models.rates import Rate
 from .models.service_categories import ServiceCategory
 from .models.services import Service
 from .models.users import User
@@ -483,6 +484,13 @@ rates = [
     ),
 ]
 
+favorites = [
+    Favorite(
+        user=user_1,
+        service=service_3,
+    ),
+]
+
 
 def seed_db():
     with Session(engine) as session:
@@ -500,4 +508,8 @@ def seed_db():
 
         for rate in rates:
             session.add(rate)
+            session.commit()
+
+        for favorite in favorites:
+            session.add(favorite)
             session.commit()

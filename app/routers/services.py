@@ -19,7 +19,7 @@ from ..repositories.service import find_all_services, find_service_by_id, find_s
 from ..repositories.service import get_filtered_services
 from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id
 from ..repositories.user import find_user_by_id, find_user
-from ..repositories.favorite import find_favorite_by_user_id_and_service_id, save_favorite, delete_favorite
+from ..repositories.favorite import find_favorite_by_user_id_and_service_id, save_favorite, delete_favorite, is_service_faved_by_user
 
 router = APIRouter(
     prefix="/services",
@@ -129,6 +129,7 @@ def create_service(
 
 @router.get("/filter/", response_model=List[ServiceResponseModel])
 def get_services(
+        user_dependency: UserDependency,
         category_ids: Optional[List[int]] = Query(None, description="IDs de las categorías a filtrar"),
         user_ids: Optional[List[int]] = Query(None, description="IDs de los usuarios a filtrar"),
         user_lat: Optional[float] = Query(-34.5824, description="Latitud del usuario"),
@@ -136,16 +137,17 @@ def get_services(
         ordered_by_distance: Optional[bool] = Query(False, description="Ordenar por distancia"),
         ordered_by_availability_now: Optional[bool] = Query(False, description="Ordenar por disponibilidad actual"),
         availability_filter: Optional[bool] = Query(False, description="Filtrar por disponibilidad"),
+        faved_only: Optional[bool] = Query(False, description="Filtrar por mis favoritos"),
         distance_filter: Optional[float] = Query(50.0, description="Filtrar por distancia en Km"),
         token: str = Depends(security),
-        session: Session = Depends(get_session)
+        session: Session = Depends(get_session),
 ):
     auth_handler = AuthHandler()
     roles = auth_handler.get_roles_from_token(token)
 
     services = get_filtered_services(
-        session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles,
-        distance_filter, availability_filter
+        user_dependency, session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles,
+        distance_filter, availability_filter, faved_only
     )
 
     response_models = [ServiceResponseModel(**{
@@ -156,18 +158,19 @@ def get_services(
         "availability_time_start": service.availability_time_start,
         "availability_time_end": service.availability_time_end,
         "availability_days": service.availability_days,
-        "service_latitude": user.address_lat,
-        "service_longitude": user.address_long,
+        "service_latitude": user_provider.address_lat,
+        "service_longitude": user_provider.address_long,
         "service_avg_rate": find_average_rate_for_service(session, service.id).scalar(),
-        "user_id": user.id,
-        "user_name": user.name,
-        "user_surname": user.surname,
-        "user_profile_photo_url": user.profile_photo_url,
-        "user_phone_number": user.phone_number,
+        "user_id": user_provider.id,
+        "user_name": user_provider.name,
+        "user_surname": user_provider.surname,
+        "user_profile_photo_url": user_provider.profile_photo_url,
+        "user_phone_number": user_provider.phone_number,
         "distance": distance,
         "is_available": is_available,
-        "own_rate": find_user_rate_for_service(session, service.id, user.id),
-    }) for service, user, distance, is_available in services]
+        "own_rate": find_user_rate_for_service(session, service.id, user_provider.id),
+        "faved_by_me": is_service_faved_by_user(session, service.id, user_dependency.id),
+    }) for service, user_provider, distance, is_available in services]
 
     return response_models
 
