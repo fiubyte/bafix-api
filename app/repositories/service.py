@@ -100,3 +100,8 @@ def get_filtered_services(session: Session, category_ids, user_ids, ordered_by_d
 
 def find_average_rate_for_service(session: Session, service_id: int):
     return session.query(func.avg(Rate.rate)).filter(Rate.service_id == service_id)
+
+
+def find_user_rate_for_service(session: Session, service_id: int, user_id: int):
+    result = session.query(Rate).filter(Rate.service_id == service_id, Rate.user_id == user_id).first()
+    return result.rate if result else None

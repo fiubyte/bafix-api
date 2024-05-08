@@ -83,3 +83,4 @@ class ServiceResponseModel(BaseModel):
     user_phone_number: str
     distance: Optional[float] = None
     is_available: Optional[bool] = None
+    own_rate: Optional[float]

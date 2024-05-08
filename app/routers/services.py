@@ -14,7 +14,7 @@ from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate
     ServiceRate
 from ..models.rates import Rate, RateRead
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
-    find_average_rate_for_service
+    find_average_rate_for_service, find_user_rate_for_service
 from ..repositories.service import get_filtered_services
 from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id
 from ..repositories.user_repository import find_user_by_id, find_user
@@ -162,7 +162,8 @@ def get_services(
         "user_profile_photo_url": user.profile_photo_url,
         "user_phone_number": user.phone_number,
         "distance": distance,
-        "is_available": is_available
+        "is_available": is_available,
+        "own_rate": find_user_rate_for_service(session, service.id, user.id),
     }) for service, user, distance, is_available in services]
 
     return response_models
