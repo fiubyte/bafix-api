@@ -31,12 +31,13 @@ class ServiceBase(SQLModel):
 class Service(ServiceBase, table=True):
     id: int = Field(default=None, primary_key=True)
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
-    avg_rate: Optional[float] # FIXME: this shouldn't be a column
-    user: User = Relationship(back_populates="services")
-    rates: Optional[list[Rate]] = Relationship(back_populates="service")
+    avg_rate: Optional[float]  # FIXME: this shouldn't be a column
+    own_rate: Optional[float]  # FIXME: this shouldn't be a column
     approved: bool = None
     rejected_message: Optional[str]
     service_category: ServiceCategory = Relationship()
+    user: User = Relationship(back_populates="services")
+    rates: Optional[list[Rate]] = Relationship(back_populates="service")
 
 
 class ServiceCreate(ServiceBase):
@@ -49,11 +50,12 @@ class ServiceRate(RateBase):
 
 class ServiceRead(ServiceBase):
     id: int
-    user: UserRead
-    service_category: ServiceCategory
     approved: Optional[bool]
     avg_rate: Optional[float]
+    own_rate: Optional[float]
     rejected_message: Optional[str]
+    service_category: ServiceCategory
+    user: UserRead
     rates: List[Rate]
 
 

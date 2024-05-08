@@ -54,6 +54,7 @@ def get_service(
         raise HTTPException(status_code=404, detail='Service not found')
 
     service.avg_rate = find_average_rate_for_service(session, service.id)
+    service.own_rate = find_user_rate_for_service(session, service.id, user.id)
 
     return service
 
