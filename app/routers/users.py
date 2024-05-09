@@ -49,6 +49,7 @@ def create_user(
         user_to_upsert = User(email=user.email, password=hashed_pwd, roles=role_to_create, name=user.name,
                               surname=user.surname, approved=None,
                               profile_photo_url=user.profile_photo_url, document_number=user.document_number,
+                              document_photo_url=user.document_photo_url,
                               street=user.street, street_number=user.street_number, postal_code=user.postal_code,
                               address_lat=address_lat, address_long=address_long, max_radius=user.max_radius,
                               phone_number=user.phone_number)
@@ -61,6 +62,7 @@ def create_user(
         user_to_upsert.approved = None
         user_to_upsert.profile_photo_url = user.profile_photo_url
         user_to_upsert.document_number = user.document_number
+        user_to_upsert.document_photo_url = user.document_photo_url
         user_to_upsert.street = user.street
         user_to_upsert.street_number = user.street_number
         user_to_upsert.postal_code = user.postal_code
