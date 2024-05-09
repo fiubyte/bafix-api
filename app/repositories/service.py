@@ -107,10 +107,19 @@ def get_filtered_services(user: UserDependency, session: Session, category_ids, 
 
 
 def find_average_rate_for_service(session: Session, service_id: int):
-    return session.query(func.avg(Rate.rate)).filter(Rate.service_id == service_id)
+    avg_rate = session.query(func.avg(Rate.rate)).filter(Rate.service_id == service_id)
+    if not avg_rate:
+        return None
+    return avg_rate.scalar()
 
 
 def find_user_rate_for_service(session: Session, service_id: int, user_id: int):
     result = session.query(Rate).filter(Rate.service_id == service_id, Rate.user_id == user_id).first()
     return result.rate if result else None
 
+
+def find_rates_for_service(session: Session, service_id: int):
+    result = session.exec(select(Rate).where(Rate.service_id == service_id)).all()
+    if not result:
+        return []
+    return result

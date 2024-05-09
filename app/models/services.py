@@ -90,3 +90,4 @@ class ServiceResponseModel(BaseModel):
     is_available: Optional[bool] = None
     own_rate: Optional[float]
     faved_by_me: Optional[bool]
+    rates: Optional[List[Rate]]

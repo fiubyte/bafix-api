@@ -26,3 +26,4 @@ def is_service_faved_by_user(session: Session, service_id: int, user_id: int):
     if result:
         return True
     return False
+

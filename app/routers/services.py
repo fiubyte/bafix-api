@@ -15,7 +15,7 @@ from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate
 from ..models.rates import Rate, RateRead
 from ..models.favorites import Favorite
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
-    find_average_rate_for_service, find_user_rate_for_service
+    find_average_rate_for_service, find_user_rate_for_service, find_rates_for_service
 from ..repositories.service import get_filtered_services
 from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id
 from ..repositories.user import find_user_by_id, find_user
@@ -160,7 +160,7 @@ def get_services(
         "availability_days": service.availability_days,
         "service_latitude": user_provider.address_lat,
         "service_longitude": user_provider.address_long,
-        "service_avg_rate": find_average_rate_for_service(session, service.id).scalar(),
+        "service_avg_rate": find_average_rate_for_service(session, service.id),
         "user_id": user_provider.id,
         "user_name": user_provider.name,
         "user_surname": user_provider.surname,
@@ -170,6 +170,7 @@ def get_services(
         "is_available": is_available,
         "own_rate": find_user_rate_for_service(session, service.id, user_provider.id),
         "faved_by_me": is_service_faved_by_user(session, service.id, user_dependency.id),
+        "rates": find_rates_for_service(session, service.id),
     }) for service, user_provider, distance, is_available in services]
 
     return response_models
