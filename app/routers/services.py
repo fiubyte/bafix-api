@@ -35,10 +35,10 @@ def get_services(
         session: Session = Depends(get_session),
         mine: bool = False
 ):
-    services = []
     if mine:
         services = find_services_for_user(session, user.id)
-    services = find_all_services(session)
+    else:
+        services = find_all_services(session)
     for service in services:
         service.avg_rate = find_average_rate_for_service(session, service.id)
 
