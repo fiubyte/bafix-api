@@ -33,3 +33,13 @@ class RateRead(BaseModel):
     service_id: int
     rate: int
     user_email: str
+
+
+class RateReadForFilter(BaseModel):
+    message: str
+    user_id: int
+    service_id: int
+    rate: int
+    name: str
+    surname: str
+    profile_photo_url: str

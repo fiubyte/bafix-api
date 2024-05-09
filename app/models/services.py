@@ -5,7 +5,7 @@ from pydantic import validator, BaseModel
 from sqlmodel import Field, SQLModel, Relationship
 
 from app.models.favorites import Favorite
-from app.models.rates import Rate, RateBase
+from app.models.rates import Rate, RateBase, RateReadForFilter
 from app.models.service_categories import ServiceCategory
 from app.models.users import User, UserRead
 
@@ -89,5 +89,6 @@ class ServiceResponseModel(BaseModel):
     distance: Optional[float] = None
     is_available: Optional[bool] = None
     own_rate: Optional[float]
+    own_rate_approved: Optional[bool]
     faved_by_me: Optional[bool]
-    rates: Optional[List[Rate]]
+    rates: Optional[List[RateReadForFilter]]

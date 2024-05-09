@@ -1,8 +1,9 @@
 from sqlmodel import Session, select
 
+from .user import find_user_by_id
 from ..dependencies import UserDependency
 from ..models.favorites import Favorite
-from ..models.rates import Rate
+from ..models.rates import Rate, RateReadForFilter
 from ..models.services import Service, User
 from sqlalchemy import or_, and_, func, Float, cast, desc, asc, Table
 import datetime
@@ -115,11 +116,29 @@ def find_average_rate_for_service(session: Session, service_id: int):
 
 def find_user_rate_for_service(session: Session, service_id: int, user_id: int):
     result = session.query(Rate).filter(Rate.service_id == service_id, Rate.user_id == user_id).first()
+    return result if result else None
+
+
+def find_user_rate_approved_for_service(session: Session, service_id: int, user_id: int):
+    result = find_user_rate_for_service(session, service_id, user_id)
+    return result.approved if result else None
+
+
+def find_user_rate_value_for_service(session: Session, service_id: int, user_id: int):
+    result = find_user_rate_for_service(session, service_id, user_id)
     return result.rate if result else None
 
 
 def find_rates_for_service(session: Session, service_id: int):
-    result = session.exec(select(Rate).where(Rate.service_id == service_id)).all()
-    if not result:
-        return []
-    return result
+    found_rates = session.exec(select(Rate).where(Rate.service_id == service_id)).all()
+    results = []
+    if not found_rates:
+        return results
+
+    for rate in found_rates:
+        user = find_user_by_id(session, rate.user_id)
+        results.append(RateReadForFilter(
+            message=rate.message, user_id=rate.user_id, service_id=rate.service_id,
+            rate=rate.rate, name=user.name, surname=user.surname, profile_photo_url=user.profile_photo_url)
+        )
+    return results
