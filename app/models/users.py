@@ -13,6 +13,7 @@ class UserBase(SQLModel):
     surname: Optional[str] = ""
     profile_photo_url: Optional[str] = ""
     document_number: Optional[str] = ""
+    document_photo_url: Optional[str] = ""
     street: Optional[str] = ""
     street_number: Optional[str] = ""
     postal_code: Optional[str] = ""
