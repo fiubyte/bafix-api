@@ -168,8 +168,8 @@ def get_services(
         "user_phone_number": user_provider.phone_number,
         "distance": distance,
         "is_available": is_available,
-        "own_rate": find_user_rate_value_for_service(session, service.id, user_provider.id),
-        "own_rate_approved": find_user_rate_approved_for_service(session, service.id, user_provider.id),
+        "own_rate": find_user_rate_value_for_service(session, service.id, user_dependency.id),
+        "own_rate_approved": find_user_rate_approved_for_service(session, service.id, user_dependency.id),
         "faved_by_me": is_service_faved_by_user(session, service.id, user_dependency.id),
         "rates": find_rates_for_service(session, service.id),
     }) for service, user_provider, distance, is_available in services]
@@ -194,15 +194,9 @@ def rate_service(
 
     rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message,
                 approved=None)
-
-    try:
-        save_rate(session, rate)
-        session.commit()
-    except IntegrityError:
-        session.rollback()
-        raise HTTPException(status_code=400, detail="A user can only rate a service once.")
-
     save_rate(session, rate)
+    service.avg_rate = find_average_rate_for_service(session, service.id)
+    service.own_rate = find_user_rate_value_for_service(session, service.id, user.id)
 
     return service
 
