@@ -487,6 +487,27 @@ rates = [
         message="Muy buena atención, recomiendo!",
         approved=None
     ),
+    Rate(
+        user=user_1,
+        service=service_10,
+        rate=5,
+        message="Excelente servicio, muy recomendable!",
+        approved=True
+    ),
+    Rate(
+        user=user_2,
+        service=service_10,
+        rate=3,
+        message="Buen servicio, pero un poco caro",
+        approved=True
+    ),
+    Rate(
+        user=user_3,
+        service=service_10,
+        rate=5,
+        message="Excelente atencion, muy amable!",
+        approved=True
+    ),
 ]
 
 favorites = [
