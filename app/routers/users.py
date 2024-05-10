@@ -29,6 +29,20 @@ def get_user(
     return user
 
 
+@router.get("/", status_code=200, response_model=list[UserRead], description='Get users')
+def get_users(
+        user_ids: str = None,
+        session: Session = Depends(get_session),
+):
+    if user_ids:
+        user_ids = user_ids.split(',')
+        users = [find_user_by_id(session, user_id) for user_id in user_ids]
+        users = [UserRead.from_orm(user) for user in users if user]
+    else:
+        users = []
+    return users
+
+
 # Only the web users are registered from this endpoint. The mobile users are upserted from /auth/login
 @router.post("/", status_code=201, response_model=UserRead, description='Register a new user')
 def create_user(
