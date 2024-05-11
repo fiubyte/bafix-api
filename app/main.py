@@ -41,3 +41,28 @@ app.include_router(users.router)
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+
+@app.get("/.well-known/assetlinks.json")
+def read_root():
+    return [{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.fiubyte.bafix",
+            "sha256_cert_fingerprints":
+                ["5B:EE:77:69:FF:84:0B:F1:F4:D6:0A:9C:C6:E6:06:A2:27:DA:20:DC:61:0A:0A:BB:9B:53:3A:40:21:4F:52:64"]
+        }
+    }]
+
+    # return """
+    # [{
+    #   "relation": ["delegate_permission/common.handle_all_urls"],
+    #   "target": {
+    #     "namespace": "android_app",
+    #     "package_name": "com.fiubyte.bafix",
+    #     "sha256_cert_fingerprints":
+    #     ["5B:EE:77:69:FF:84:0B:F1:F4:D6:0A:9C:C6:E6:06:A2:27:DA:20:DC:61:0A:0A:BB:9B:53:3A:40:21:4F:52:64"]
+    #   }
+    # }]
+    # """
