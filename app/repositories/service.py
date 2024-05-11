@@ -115,7 +115,7 @@ def find_average_rate_for_service(session: Session, service_id: int):
 
 
 def find_user_rate_for_service(session: Session, service_id: int, user_id: int):
-    result = session.query(Rate).filter(Rate.service_id == service_id, Rate.user_id == user_id).filter(Rate.approved == True).first()
+    result = session.query(Rate).filter(Rate.service_id == service_id, Rate.user_id == user_id).first()
     return result if result else None
 
 
@@ -139,6 +139,6 @@ def find_rates_for_service(session: Session, service_id: int):
         user = find_user_by_id(session, rate.user_id)
         results.append(RateReadForFilter(
             message=rate.message, user_id=rate.user_id, service_id=rate.service_id,
-            rate=rate.rate, name=user.name, surname=user.surname, profile_photo_url=user.profile_photo_url)
-        )
+            rate=rate.rate, name=user.name, surname=user.surname, profile_photo_url=user.profile_photo_url,
+            approved=rate.approved))
     return results

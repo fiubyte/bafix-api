@@ -34,6 +34,7 @@ class Service(ServiceBase, table=True):
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
     avg_rate: Optional[float]  # FIXME: this shouldn't be a column
     own_rate: Optional[float]  # FIXME: this shouldn't be a column
+    own_rate_approved: Optional[bool]  # FIXME: this shouldn't be a column
     approved: bool = None
     rejected_message: Optional[str]
     service_category: ServiceCategory = Relationship()
@@ -55,6 +56,7 @@ class ServiceRead(ServiceBase):
     approved: Optional[bool]
     avg_rate: Optional[float]
     own_rate: Optional[float]
+    own_rate_approved: Optional[bool]
     rejected_message: Optional[str]
     service_category: ServiceCategory
     user: UserRead

@@ -33,6 +33,7 @@ class RateRead(BaseModel):
     service_id: int
     rate: int
     user_email: str
+    approved: Optional[bool]
 
 
 class RateReadForFilter(BaseModel):
@@ -43,3 +44,4 @@ class RateReadForFilter(BaseModel):
     name: str
     surname: str
     profile_photo_url: str
+    approved: Optional[bool]
