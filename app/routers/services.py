@@ -17,7 +17,7 @@ from ..models.favorites import Favorite
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
     find_average_rate_for_service, find_user_rate_approved_for_service, find_rates_for_service, find_user_rate_value_for_service
 from ..repositories.service import get_filtered_services
-from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id
+from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id, delete_rate
 from ..repositories.user import find_user_by_id, find_user
 from ..repositories.favorite import find_favorite_by_user_id_and_service_id, save_favorite, delete_favorite, is_service_faved_by_user
 
@@ -191,9 +191,16 @@ def rate_service(
     service = find_service_by_id(session, id)
     if not service:
         raise HTTPException(status_code=404, detail='Service not found')
+    # print(f"user_email: {user.email}, user_name: {user.name}, user_surname: {user.surname}")
+    rate = find_rate_by_user_id_and_service_id(session, user.id, service.id)
+    
+    if rate is not None:
+        delete_rate(session, rate)
 
+    
     rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message,
-                approved=None)
+                approved=None, user_name=user.name, user_surname=user.surname, user_email=user.email)
+    
     save_rate(session, rate)
     service.avg_rate = find_average_rate_for_service(session, service.id)
     service.own_rate = find_user_rate_value_for_service(session, service.id, user.id)

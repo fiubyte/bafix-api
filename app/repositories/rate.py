@@ -15,3 +15,8 @@ def find_rate_by_id(session: Session, rate_id: int):
 
 def find_rate_by_user_id_and_service_id(session: Session, user_id: int, service_id: int):
     return session.exec(select(Rate).where(Rate.user_id == user_id).where(Rate.service_id == service_id)).first()
+
+def delete_rate(session: Session, rate: Rate):
+    session.delete(rate)
+    session.commit()
+    return rate

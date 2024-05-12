@@ -25,6 +25,9 @@ class Rate(RateBase, table=True):
     user: "User" = Relationship(back_populates="user_rates")
     service: "Service" = Relationship(back_populates="rates")
     approved: Optional[bool]
+    user_name: Optional[str]
+    user_surname: Optional[str]
+    user_email: Optional[str]
 
 
 class RateRead(BaseModel):
