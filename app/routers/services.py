@@ -182,7 +182,9 @@ def rate_service(
         id: int,
         service_rate: ServiceRate,
         user: UserDependency,
-        session: Session = Depends(get_session)
+        session: Session = Depends(get_session),
+        user_name: Optional[str] = Query(None, description="Optional"),
+        user_surname: Optional[str] = Query(None, description="Optional")
 ):
     user = find_user_by_id(session, user.id)
     if not user:
@@ -197,9 +199,11 @@ def rate_service(
     if rate is not None:
         delete_rate(session, rate)
 
+    final_user_name = user_name if user_name else user.name
+    final_user_surname = user_surname if user_surname else user.surname
     
     rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message,
-                approved=None, user_name=user.name, user_surname=user.surname, user_email=user.email)
+                approved=None, user_name=final_user_name, user_surname=final_user_surname, user_email=user.email)
     
     save_rate(session, rate)
     service.avg_rate = find_average_rate_for_service(session, service.id)
