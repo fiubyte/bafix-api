@@ -56,7 +56,7 @@ def read_root():
             "namespace": "android_app",
             "package_name": "com.fiubyte.bafix",
             "sha256_cert_fingerprints":
-                ["5B:EE:77:69:FF:84:0B:F1:F4:D6:0A:9C:C6:E6:06:A2:27:DA:20:DC:61:0A:0A:BB:9B:53:3A:40:21:4F:52:64"]
+                ["5B:EE:77:69:FF:84:0B:F1:F4:D6:0A:9C:C6:E6:06:A2:27:DA:20:DC:61:0A:0A:BB:9B:53:3A:40:21:4F:52:64", "75:59:52:59:2A:46:56:9C:54:F7:1D:5E:1D:E1:B2:A8:37:3C:C7:5F:D9:9C:38:B9"]
         }
     }]
 
