@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .db import init_db, drop_db, seed_db
 from .routers import auth, service_categories, services, users
+from fastapi.responses import RedirectResponse
 
 
 @asynccontextmanager
@@ -42,6 +43,10 @@ app.include_router(users.router)
 def read_root():
     return {"Hello": "World"}
 
+
+@app.get("/service/{service_id}")
+def redirect_to_web(service_id: str):
+    return RedirectResponse(f"https://bafix-web.vercel.app/{service_id}")
 
 @app.get("/.well-known/assetlinks.json")
 def read_root():
