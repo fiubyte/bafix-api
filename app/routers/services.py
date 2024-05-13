@@ -243,10 +243,11 @@ def reject_rate(
     service = find_service_by_id(session, service_id)
     if not service:
         raise HTTPException(status_code=404, detail='Service not found')
-
+    
+    service.own_rate_approved = False
+    save_service(session, service)
     rate = find_rate_by_id(session, rate_id)
     rate.approved = False
-    rate.own_rate_approved = False
     save_rate(session, rate)
 
     return service
