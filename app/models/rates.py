@@ -25,8 +25,7 @@ class Rate(RateBase, table=True):
     user: "User" = Relationship(back_populates="user_rates")
     service: "Service" = Relationship(back_populates="rates")
     approved: Optional[bool]
-    user_name: Optional[str]
-    user_surname: Optional[str]
+    user_name_to_display: Optional[str]
     user_email: Optional[str]
 
 
@@ -44,7 +43,6 @@ class RateReadForFilter(BaseModel):
     user_id: int
     service_id: int
     rate: int
-    name: str
-    surname: str
+    user_name_to_display: Optional[str]
     profile_photo_url: str
     approved: Optional[bool]
