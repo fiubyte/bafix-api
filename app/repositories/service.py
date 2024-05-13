@@ -134,11 +134,8 @@ def find_rates_for_service(session: Session, service_id: int):
     results = []
     if not found_rates:
         return results
-
     for rate in found_rates:
         user = find_user_by_id(session, rate.user_id)
-        results.append(RateReadForFilter(
-            message=rate.message, user_id=rate.user_id, service_id=rate.service_id,
-            rate=rate.rate, name=user.name, surname=user.surname, profile_photo_url=user.profile_photo_url,
-            approved=rate.approved))
+        # print(f"User username: {user.name}")
+        results.append(rate)
     return results
