@@ -15,7 +15,7 @@ if os.getenv('ENV', 'local') == 'local':
     sqlite_file_name = "database.db"
     sqlite_url = f"sqlite:///{sqlite_file_name}"
     connect_args = {"check_same_thread": False}
-    engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
+    engine = create_engine(sqlite_url, echo=False, connect_args=connect_args)
     print("Connected to local BA Fix DB")
 else:
     db_url = "postgresql://{}:{}@{}:{}/{}".format(
@@ -450,63 +450,73 @@ rates = [
         service=service_1,
         rate=4,
         message="Muy buen sevicio, lo recomiendo pero la próxima espero más puntualidad.",
-        approved=True
+        approved=True,
+        user_name_to_display="Julia Benavídez"
     ),
     Rate(
         user=user_2,
         service=service_2,
         rate=5,
         message="Muy bueno, recomiendo!",
-        approved=True
+        approved=True,
+        user_name_to_display="Mario Delgado"
     ),
     Rate(
         user=user_2,
         service=service_3,
         rate=1,
         message="No vayan, un desastre!",
-        approved=True
+        approved=True,
+        user_name_to_display="Mario Delgado"
     ),
     Rate(
         user=user_2,
         service=service_4,
         rate=1,
         message="No vayan, un desastre!!!",
-        approved=True
+        approved=True,
+        user_name_to_display="Mario Delgado"
     ),
     Rate(
         user=user_3,
         service=service_5,
         rate=3,
         message="Aceptable...",
-        approved=False
+        approved=False,
+        user_name_to_display="Augusto Molina"
     ),
     Rate(
         user=user_3,
         service=service_4,
         rate=4,
         message="Muy buena atención, recomiendo!",
-        approved=None
+        approved=None,
+        user_name_to_display="Augusto Molina"
     ),
     Rate(
         user=user_1,
         service=service_10,
         rate=5,
         message="Excelente servicio, muy recomendable!",
-        approved=True
+        approved=True,
+        user_name_to_display="Julia Benavídez"
+
     ),
     Rate(
         user=user_2,
         service=service_10,
         rate=3,
         message="Buen servicio, pero un poco caro",
-        approved=True
+        approved=True,
+        user_name_to_display="Mario Delgado"
     ),
     Rate(
         user=user_3,
         service=service_10,
         rate=5,
         message="Excelente atencion, muy amable!",
-        approved=True
+        approved=True,
+        user_name_to_display="Augusto Molina"
     ),
 ]
 
