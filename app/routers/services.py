@@ -246,6 +246,7 @@ def reject_rate(
 
     rate = find_rate_by_id(session, rate_id)
     rate.approved = False
+    rate.own_rate_approved = False
     save_rate(session, rate)
 
     return service
