@@ -93,4 +93,4 @@ class ServiceResponseModel(BaseModel):
     own_rate: Optional[float]
     own_rate_approved: Optional[bool]
     faved_by_me: Optional[bool]
-    rates: Optional[List[RateReadForFilter]]
+    rates: Optional[List[Rate]]
