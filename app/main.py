@@ -46,7 +46,7 @@ def read_root():
 
 @app.get("/service/{service_id}")
 def redirect_to_web(service_id: str):
-    return RedirectResponse(f"https://bafix-web.vercel.app/{service_id}")
+    return RedirectResponse(f"https://bafix-web.vercel.app/service/{service_id}")
 
 @app.get("/.well-known/assetlinks.json")
 def read_root():
