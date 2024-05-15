@@ -129,3 +129,21 @@ def reject_user(
     session.commit()
     session.refresh(user)
     return user
+
+
+@router.post("/{user_id}/review", status_code=200, response_model=UserRead)
+def put_user_to_review(
+        user_id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail='User not found')
+
+    user.approved = None
+    user.rejected_message = ''
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user
