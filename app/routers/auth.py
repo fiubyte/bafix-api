@@ -48,7 +48,7 @@ def login(user: UserLogin, session: Session = Depends(get_session)):
         if not user_to_upsert:
             full_name_splitted = user.fullName.split(' ')
             surname = full_name_splitted[-1]
-            name = ''.join(full_name_splitted.pop())
+            name = full_name_splitted[0:-1]
             user_to_upsert = User(email=user.email, name=name, surname=surname, roles=Role.USER.value)
             print(f'Google login about to create user: {user_to_upsert}')
             save_user(session, user_to_upsert)
