@@ -525,126 +525,126 @@ rates = [
 
 service_views = [
     ServiceView(
-        user=user_1,
-        service=service_1,
+        user_id=2,
+        service_id=1,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_1,
-        service=service_4,
+        user_id=2,
+        service_id=4,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_1,
-        service=service_5,
+        user_id=2,
+        service_id=3,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_1,
-        service=service_6,
+        user_id=2,
+        service_id=2,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_2,
-        service=service_2,
+        user_id=3,
+        service_id=2,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_2,
-        service=service_7,
+        user_id=3,
+        service_id=7,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_2,
-        service=service_8,
+        user_id=3,
+        service_id=8,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_2,
-        service=service_9,
+        user_id=3,
+        service_id=9,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_2,
-        service=service_10,
+        user_id=3,
+        service_id=10,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_3,
-        service=service_3,
+        user_id=4,
+        service_id=3,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_3,
-        service=service_11,
+        user_id=4,
+        service_id=11,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_3,
-        service=service_12,
+        user_id=4,
+        service_id=12,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_3,
-        service=service_13,
+        user_id=4,
+        service_id=13,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_3,
-        service=service_14,
+        user_id=4,
+        service_id=14,
         timestamp=datetime.now()
     ),
     ServiceView(
-        user=user_3,
-        service=service_15,
+        user_id=4,
+        service_id=15,
         timestamp=datetime.now()
     ),
 ]
 
 service_contacts = [
     ServiceContact(
-        user=user_1,
-        service=service_1,
+        user_id=2,
+        service_id=1,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_1,
-        service=service_4,
+        user_id=2,
+        service_id=1,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_2,
-        service=service_2,
+        user_id=3,
+        service_id=2,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_2,
-        service=service_7,
+        user_id=3,
+        service_id=7,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_3,
-        service=service_3,
+        user_id=4,
+        service_id=3,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_3,
-        service=service_11,
+        user_id=4,
+        service_id=11,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_3,
-        service=service_12,
+        user_id=4,
+        service_id=12,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_3,
-        service=service_13,
+        user_id=4,
+        service_id=13,
         timestamp=datetime.now()
     ),
     ServiceContact(
-        user=user_3,
-        service=service_14,
+        user_id=4,
+        service_id=14,
         timestamp=datetime.now()
     ),
 ]
