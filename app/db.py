@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from sqlmodel import SQLModel, create_engine, Session
 
@@ -7,6 +8,8 @@ from .models.enums.roles import Role
 from .models.favorites import Favorite
 from .models.rates import Rate
 from .models.service_categories import ServiceCategory
+from .models.service_contact import ServiceContact
+from .models.service_view import ServiceView
 from .models.services import Service
 from .models.users import User
 
@@ -520,6 +523,132 @@ rates = [
     ),
 ]
 
+service_views = [
+    ServiceView(
+        user=user_1,
+        service=service_1,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_1,
+        service=service_4,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_1,
+        service=service_5,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_1,
+        service=service_6,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_2,
+        service=service_2,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_2,
+        service=service_7,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_2,
+        service=service_8,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_2,
+        service=service_9,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_2,
+        service=service_10,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_3,
+        service=service_3,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_3,
+        service=service_11,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_3,
+        service=service_12,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_3,
+        service=service_13,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_3,
+        service=service_14,
+        timestamp=datetime.now()
+    ),
+    ServiceView(
+        user=user_3,
+        service=service_15,
+        timestamp=datetime.now()
+    ),
+]
+
+service_contacts = [
+    ServiceContact(
+        user=user_1,
+        service=service_1,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_1,
+        service=service_4,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_2,
+        service=service_2,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_2,
+        service=service_7,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_3,
+        service=service_3,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_3,
+        service=service_11,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_3,
+        service=service_12,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_3,
+        service=service_13,
+        timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user=user_3,
+        service=service_14,
+        timestamp=datetime.now()
+    ),
+]
+
 favorites = [
     Favorite(
         user=user_1,
@@ -548,4 +677,12 @@ def seed_db():
 
         for favorite in favorites:
             session.add(favorite)
+            session.commit()
+
+        for service_view in service_views:
+            session.add(service_view)
+            session.commit()
+
+        for service_contact in service_contacts:
+            session.add(service_contact)
             session.commit()
