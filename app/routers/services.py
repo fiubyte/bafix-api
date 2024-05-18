@@ -1,6 +1,6 @@
+from datetime import datetime
 from typing import List
 from typing import Optional
-from sqlalchemy.exc import IntegrityError
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi import Query
@@ -9,17 +9,23 @@ from sqlmodel import Session
 
 from ..auth import AuthHandler
 from ..dependencies import UserDependency, get_session
+from ..models.favorites import Favorite
 from ..models.helpers import set_attrs_from_dict
+from ..models.rates import Rate
+from ..models.service_contact import ServiceContact
+from ..models.service_view import ServiceView
 from ..models.services import ServiceCreate, ServiceRead, Service, ServiceUpdate, ServiceResponseModel, ServiceReject, \
     ServiceRate
-from ..models.rates import Rate, RateRead
-from ..models.favorites import Favorite
-from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
-    find_average_rate_for_service, find_user_rate_approved_for_service, find_rates_for_service, find_user_rate_value_for_service
-from ..repositories.service import get_filtered_services
+from ..repositories.favorite import find_favorite_by_user_id_and_service_id, save_favorite, delete_favorite, \
+    is_service_faved_by_user
 from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id_and_service_id, delete_rate
+from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
+    find_average_rate_for_service, find_user_rate_approved_for_service, find_rates_for_service, \
+    find_user_rate_value_for_service
+from ..repositories.service import get_filtered_services
+from ..repositories.service_contact import save_service_contact, find_service_contacts
+from ..repositories.service_view import save_service_view, find_service_views
 from ..repositories.user import find_user_by_id, find_user
-from ..repositories.favorite import find_favorite_by_user_id_and_service_id, save_favorite, delete_favorite, is_service_faved_by_user
 
 router = APIRouter(
     prefix="/services",
@@ -146,7 +152,8 @@ def get_services(
     roles = auth_handler.get_roles_from_token(token)
 
     services = get_filtered_services(
-        user_dependency, session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat, user_long, roles,
+        user_dependency, session, category_ids, user_ids, ordered_by_distance, ordered_by_availability_now, user_lat,
+        user_long, roles,
         distance_filter, availability_filter, faved_only
     )
 
@@ -198,7 +205,7 @@ def rate_service(
 
     rate = Rate(user_id=user.id, service_id=service.id, rate=service_rate.rate, message=service_rate.message,
                 approved=None, user_name_to_display=user_name_to_display, user_email=user.email)
-    
+
     save_rate(session, rate)
     service.avg_rate = find_average_rate_for_service(session, service.id)
     service.own_rate = find_user_rate_value_for_service(session, service.id, user.id)
@@ -243,7 +250,7 @@ def reject_rate(
     service = find_service_by_id(session, service_id)
     if not service:
         raise HTTPException(status_code=404, detail='Service not found')
-    
+
     service.own_rate_approved = False
     save_service(session, service)
     rate = find_rate_by_id(session, rate_id)
@@ -315,3 +322,75 @@ def unfavorite_service(
         delete_favorite(session, favorite)
 
     return service
+
+
+@router.post("/{id}/view", status_code=200)
+def view_service(
+        id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    save_service_view(session, ServiceView(user_id=user.id, service_id=service.id, timestamp=datetime.now()))
+
+    return
+
+
+@router.get("/{id}/view", status_code=200)
+def get_service_views(
+        id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    return find_service_views(session, service.id)
+
+
+@router.post("/{id}/contact", status_code=200)
+def contact_service(
+        id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    save_service_contact(session, ServiceContact(user_id=user.id, service_id=service.id, timestamp=datetime.now()))
+
+    return
+
+
+@router.get("/{id}/contact", status_code=200)
+def get_service_contacts(
+        id: int,
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, user.id)
+    if not user:
+        raise HTTPException(status_code=400, detail='User not found')
+
+    service = find_service_by_id(session, id)
+    if not service:
+        raise HTTPException(status_code=404, detail='Service not found')
+
+    return find_service_contacts(session, service.id)
