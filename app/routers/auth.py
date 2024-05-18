@@ -26,6 +26,7 @@ bafix_firebase_app = firebase_admin.initialize_app(firebase_credentials)
 
 @router.post("/login", response_model=Any)
 def login(user: UserLogin, session: Session = Depends(get_session)):
+    print(f'Received login attempt with user: {user}')
     user_found = find_user(session, user.email)
     if not user.google_id_token:
         if not user_found:
