@@ -40,17 +40,22 @@ def login(user: UserLogin, session: Session = Depends(get_session)):
     else:
         # Google/Firebase auth
         print('Attempting to verify google id token')
-        decoded_token = auth.verify_id_token(user.google_id_token)
+        auth.verify_id_token(user.google_id_token)
         print('Google id token verified successfully')
-        # decoded_token['uid']
+
         # From this point on we confirm it's authenticated
         user_to_upsert = user_found
         if not user_to_upsert:
-            user_to_upsert = User(email=user.email, roles=Role.USER.value)
+            full_name_splitted = user.fullName.split(' ')
+            surname = full_name_splitted[-1]
+            name = ''.join(full_name_splitted.pop())
+            user_to_upsert = User(email=user.email, name=name, surname=surname, roles=Role.USER.value)
+            print(f'Google login about to create user: {user_to_upsert}')
             save_user(session, user_to_upsert)
         else:
             if not Role.USER.value in user_to_upsert.roles:
                 user_to_upsert.roles = user_to_upsert.roles.append(',' + Role.USER.value)
+                print(f'Google login about to update user: {user_to_upsert}')
                 update_user(session, user_to_upsert)
         token = auth_handler.encode_token(user_to_upsert.id, user_to_upsert.email, user_to_upsert.roles)
         return {'token': token}

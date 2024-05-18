@@ -59,6 +59,7 @@ class UserInput(UserBase):
 class UserLogin(SQLModel):
     email: str = "admin@example.com"
     password: str = "admin"
+    fullName: Optional[str]
     google_id_token: Optional[str]
 
 
