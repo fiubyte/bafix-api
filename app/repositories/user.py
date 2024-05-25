@@ -24,3 +24,7 @@ def save_user(session: Session, user):
     session.add(user)
     session.commit()
     session.refresh(user)
+
+def is_document_number_available(document_number: str, session: Session):
+    document = session.exec(select(User).where(User.document_number == document_number)).first()
+    return document is None

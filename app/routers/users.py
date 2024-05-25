@@ -6,7 +6,7 @@ from ..clients.geoapify import get_coordinates_from_address
 from ..dependencies import UserDependency, get_session
 from ..models.enums.roles import Role
 from ..models.users import UserRead, UserInput, User, UserReject
-from ..repositories.user import find_user, find_user_by_id
+from ..repositories.user import find_user, find_user_by_id, is_document_number_available
 
 router = APIRouter(
     prefix="/users",
@@ -147,3 +147,8 @@ def put_user_to_review(
     session.commit()
     session.refresh(user)
     return user
+
+@router.get("/document_available/{document_number}", description='Check if a document number is available')
+def check_document_availability(document_number: str, session: Session = Depends(get_session)):
+    is_available = is_document_number_available(document_number, session)
+    return {"available": is_available}
