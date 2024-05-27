@@ -6,6 +6,8 @@ from ..clients.geoapify import get_coordinates_from_address
 from ..dependencies import UserDependency, get_session
 from ..models.enums.roles import Role
 from ..models.users import UserRead, UserInput, User, UserReject
+from ..repositories.service_contact import find_service_contacts
+from ..repositories.service_view import find_service_views
 from ..repositories.user import find_user, find_user_by_id, is_document_number_available
 
 router = APIRouter(
@@ -152,3 +154,34 @@ def put_user_to_review(
 def check_document_availability(document_number: str, session: Session = Depends(get_session)):
     is_available = is_document_number_available(document_number, session)
     return {"available": is_available}
+
+@router.get("/{id}/views", status_code=200, description='Get views of a user')
+def get_user_views(
+        id: int,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, id)
+    if not user:
+        raise HTTPException(status_code=404, detail='User not found')
+
+    views = []
+    for service in user.services:
+        views += find_service_views(session, service.id)
+
+    return views
+
+
+@router.get("/{id}/contacts", status_code=200, description='Get contacts of a user')
+def get_user_contacts(
+        id: int,
+        session: Session = Depends(get_session),
+):
+    user = find_user_by_id(session, id)
+    if not user:
+        raise HTTPException(status_code=404, detail='User not found')
+
+    contacts = []
+    for service in user.services:
+        contacts += find_service_contacts(session, service.id)
+
+    return contacts
