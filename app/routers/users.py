@@ -82,6 +82,9 @@ def create_user(
             raise HTTPException(status_code=400, detail='Email is taken')
     user_to_upsert = user_found
 
+    if not is_document_number_available(session, user.document_number):
+        raise HTTPException(status_code=400, detail='Document number is taken')
+    
     address_lat, address_long = get_coordinates_from_address(user.street, user.street_number)
     hashed_pwd = auth_handler.get_password_hash(user.password)
     if not user_to_upsert:
