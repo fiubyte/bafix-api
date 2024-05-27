@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from sqlmodel import SQLModel, create_engine, Session
 
@@ -363,7 +363,7 @@ service_9 = Service(
     availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
 )
 service_10 = Service(
-    user_id=5,
+    user_id=5, # nperez
     service_category_id=7,  # Electricista
     approved=True,
     title="Instalación de sistema de iluminación LED en hogar",
@@ -374,7 +374,7 @@ service_10 = Service(
     availability_days="Lunes,Miercoles,Viernes,Domingo"
 )
 service_11 = Service(
-    user_id=5,
+    user_id=5, # nperez
     service_category_id=8,  # Cerrajeria
     approved=True,
     title="Duplicado de llaves para puerta principal",
@@ -385,7 +385,7 @@ service_11 = Service(
     availability_days="Martes"
 )
 service_12 = Service(
-    user_id=5,
+    user_id=5, # nperez
     service_category_id=9,  # Reparacion de electrodomesticos
     approved=None,
     title="Reparación de lavadora con problemas de centrifugado",
@@ -599,6 +599,21 @@ service_views = [
         service_id=15,
         timestamp=datetime.now()
     ),
+    ServiceView(
+        user_id=4,
+        service_id=2, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceView(
+        user_id=4,
+        service_id=11, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=4,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
 ]
 
 service_contacts = [
@@ -646,6 +661,21 @@ service_contacts = [
         user_id=4,
         service_id=14,
         timestamp=datetime.now()
+    ),
+    ServiceContact(
+        user_id=4,
+        service_id=2, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=2,
+        service_id=11, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=7,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
     ),
 ]
 
