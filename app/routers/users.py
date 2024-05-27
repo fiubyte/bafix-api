@@ -150,20 +150,18 @@ def put_user_to_review(
     session.refresh(user)
     return user
 
+
 @router.get("/document_available/{document_number}", description='Check if a document number is available')
 def check_document_availability(document_number: str, session: Session = Depends(get_session)):
     is_available = is_document_number_available(document_number, session)
     return {"available": is_available}
 
-@router.get("/{id}/views", status_code=200, description='Get views of a user')
+
+@router.get("/views", status_code=200, description='Get views of a user')
 def get_user_views(
-        id: int,
+        user: UserDependency,
         session: Session = Depends(get_session),
 ):
-    user = find_user_by_id(session, id)
-    if not user:
-        raise HTTPException(status_code=404, detail='User not found')
-
     views = []
     for service in user.services:
         views += find_service_views(session, service.id)
@@ -171,15 +169,11 @@ def get_user_views(
     return views
 
 
-@router.get("/{id}/contacts", status_code=200, description='Get contacts of a user')
+@router.get("/contacts", status_code=200, description='Get contacts of a user')
 def get_user_contacts(
-        id: int,
+        user: UserDependency,
         session: Session = Depends(get_session),
 ):
-    user = find_user_by_id(session, id)
-    if not user:
-        raise HTTPException(status_code=404, detail='User not found')
-
     contacts = []
     for service in user.services:
         contacts += find_service_contacts(session, service.id)
