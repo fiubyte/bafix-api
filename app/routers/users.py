@@ -17,6 +17,30 @@ router = APIRouter(
 )
 
 
+@router.get("/views", status_code=200, description='Get views of a user')
+def get_user_views(
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    views = []
+    for service in user.services:
+        views += find_service_views(session, service.id)
+
+    return views
+
+
+@router.get("/contacts", status_code=200, description='Get contacts of a user')
+def get_user_contacts(
+        user: UserDependency,
+        session: Session = Depends(get_session),
+):
+    contacts = []
+    for service in user.services:
+        contacts += find_service_contacts(session, service.id)
+
+    return contacts
+
+
 @router.get("/{user_id}", status_code=200, response_model=UserRead, description='Get a User by ID')
 def get_user(
         user_id: int,
@@ -155,27 +179,3 @@ def put_user_to_review(
 def check_document_availability(document_number: str, session: Session = Depends(get_session)):
     is_available = is_document_number_available(document_number, session)
     return {"available": is_available}
-
-
-@router.get("/views", status_code=200, description='Get views of a user')
-def get_user_views(
-        user: UserDependency,
-        session: Session = Depends(get_session),
-):
-    views = []
-    for service in user.services:
-        views += find_service_views(session, service.id)
-
-    return views
-
-
-@router.get("/contacts", status_code=200, description='Get contacts of a user')
-def get_user_contacts(
-        user: UserDependency,
-        session: Session = Depends(get_session),
-):
-    contacts = []
-    for service in user.services:
-        contacts += find_service_contacts(session, service.id)
-
-    return contacts
