@@ -370,7 +370,7 @@ service_10 = Service(
     description="Ahorra energía y moderniza tu hogar con la instalación de un sistema de iluminación LED eficiente.",
     photo_url="https://img.freepik.com/fotos-premium/sala-cine-casa-iluminacion-led-colores-hogar-inteligente_916189-435.jpg?w=360",
     availability_time_start="00:00",
-    availability_time_end="18:00",
+    availability_time_end="23:00",
     availability_days="Lunes,Miercoles,Viernes,Domingo"
 )
 service_11 = Service(
@@ -381,8 +381,8 @@ service_11 = Service(
     description="Evita contratiempos con un duplicado rápido y preciso de tus llaves principales realizado por cerrajeros expertos.",
     photo_url="https://masencarnacion.s3.us-west-2.amazonaws.com/uploads/public/638/09d/8d5/63809d8d594c3195931735.jpg",
     availability_time_start="10:00",
-    availability_time_end="18:00",
-    availability_days="Martes"
+    availability_time_end="23:00",
+    availability_days="Lunes,Martes"
 )
 service_12 = Service(
     user_id=5, # nperez
@@ -392,7 +392,7 @@ service_12 = Service(
     description="Devuelve el funcionamiento óptimo a tu lavadora con una reparación profesional de problemas de centrifugado.",
     photo_url="https://thumbs.dreamstime.com/b/servicio-de-reparacion-lavadora-joven-mujer-reparaci%C3%B3n-trabajador-218463087.jpg",
     availability_time_start="10:00",
-    availability_time_end="18:00",
+    availability_time_end="23:00",
     availability_days="Jueves"
 )
 service_13 = Service(
