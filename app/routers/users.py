@@ -82,7 +82,7 @@ def create_user(
             raise HTTPException(status_code=400, detail='Email is taken')
     user_to_upsert = user_found
 
-    if not is_document_number_available(session, user.document_number):
+    if not is_document_number_available(user.document_number, session):
         raise HTTPException(status_code=400, detail='Document number is taken')
     
     address_lat, address_long = get_coordinates_from_address(user.street, user.street_number)
