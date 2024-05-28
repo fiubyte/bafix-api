@@ -176,9 +176,3 @@ def put_user_to_review(
     session.commit()
     session.refresh(user)
     return user
-
-
-@router.get("/document_available/{document_number}", description='Check if a document number is available')
-def check_document_availability(document_number: str, session: Session = Depends(get_session)):
-    is_available = is_document_number_available(document_number, session)
-    return {"available": is_available}
