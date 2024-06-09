@@ -53,7 +53,8 @@ user_admin = User(
     address_long="-58.38604247551021",
     postal_code='1416',
     max_radius=10.0,
-    phone_number="+5491132637625"
+    phone_number="+5491132637625",
+    created_at=datetime.today()
 )
 user_1 = User(
     email="jbenavidez@gmail.com",
@@ -70,7 +71,8 @@ user_1 = User(
     address_long="-58.420097140506904",
     postal_code='1177',
     max_radius=10.0,
-    phone_number="+5491132637625"
+    phone_number="+5491132637625",
+    created_at=datetime.today() - timedelta(days=1)
 )
 user_2 = User(
     email="mdelgado@gmail.com",
@@ -87,7 +89,8 @@ user_2 = User(
     address_long="-58.38257618714883",
     postal_code='1033',
     max_radius=10,
-    phone_number="+5491140922989"
+    phone_number="+5491140922989",
+    created_at=datetime.today() - timedelta(days=2)
 )
 user_3 = User(
     email="amolina@gmail.com",
@@ -104,7 +107,8 @@ user_3 = User(
     address_long="-58.398505915985815",
     postal_code='1425',
     max_radius=50,
-    phone_number="+5491156160047"
+    phone_number="+5491156160047",
+    created_at=datetime.today()
 )
 provider_1 = User(
     email="nperez@gmail.com",
@@ -123,7 +127,8 @@ provider_1 = User(
     address_long="-58.48203388715096",
     postal_code='1429',
     max_radius=1,
-    phone_number="+5491132637625"
+    phone_number="+5491132637625",
+    created_at=datetime.today() - timedelta(days=1)
 )
 provider_2 = User(
     email="cpasaft@gmail.com",
@@ -141,7 +146,8 @@ provider_2 = User(
     address_long="-58.38277346103068",
     postal_code='1277',
     max_radius=2.5,
-    phone_number="+358405550171"
+    phone_number="+358405550171",
+    created_at=datetime.today() - timedelta(days=2)
 )
 
 provider_3 = User(
@@ -160,7 +166,8 @@ provider_3 = User(
     address_long="-58.38277346103068",
     postal_code='1414',
     max_radius=2.5,
-    phone_number="+5491140922989"
+    phone_number="+5491140922989",
+    created_at=datetime.today() - timedelta(days=3)
 )
 
 provider_4 = User(
@@ -179,7 +186,8 @@ provider_4 = User(
     address_long="-58.38277346103068",
     postal_code='1414',
     max_radius=2.5,
-    phone_number="+5491156160047"
+    phone_number="+5491156160047",
+    created_at=datetime.today() - timedelta(days=2)
 )
 
 users = [

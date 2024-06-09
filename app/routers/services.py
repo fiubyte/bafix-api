@@ -22,7 +22,7 @@ from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
     find_average_rate_for_service, find_user_rate_approved_for_service, find_rates_for_service, \
     find_user_rate_value_for_service
-from ..repositories.service import get_filtered_services
+from ..repositories.service import get_filtered_services, calculate_services_conversion_rate
 from ..repositories.service_contact import save_service_contact, find_service_contacts, find_top_contacts_users
 from ..repositories.service_view import save_service_view, find_service_views
 from ..repositories.user import find_user_by_id, find_user
@@ -416,4 +416,12 @@ def get_top_contacts(
         raise HTTPException(status_code=404, detail="No contact data found for the specified range and grouping option.")
 
     return response
-    
+
+
+@router.get("/metrics/conversion_rate/")
+def conversion_rate(
+        session: Session = Depends(get_session),
+        start_date: datetime = Query(default=datetime(2000,1,1), description="Start date for the range of dates in ISO 8601 format"),
+        end_date: datetime = Query(default=datetime(2025,1,1), description="End date for the range of dates in ISO 8601 format")
+):
+    return calculate_services_conversion_rate(session, start_date, end_date)
