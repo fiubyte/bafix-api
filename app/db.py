@@ -632,7 +632,7 @@ service_contacts = [
     ),
     ServiceContact(
         user_id=2,
-        service_id=1,
+        service_id=8,
         timestamp=datetime.now()
     ),
     ServiceContact(

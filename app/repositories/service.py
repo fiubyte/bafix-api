@@ -161,6 +161,6 @@ def calculate_services_conversion_rate(session: Session, start: datetime, end: d
                           .filter(ServiceContact.timestamp <= end)
                           .all())[0][0]
         if total_views != 0:
-            result[service.title] = (total_contacts / total_views) * 100
+            result[service.id] = {"service_id": service.id, "title": service.title, "conversion_rate": (total_contacts / total_views) * 100}
 
-    return {k: v for k, v in sorted(result.items(), key=lambda item: item[1], reverse=True)} if result else None
+    return {k: v for k, v in sorted(result.items(), key=lambda item: item[1]['conversion_rate'], reverse=True)} if result else None

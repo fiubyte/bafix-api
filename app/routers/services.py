@@ -421,7 +421,10 @@ def get_top_contacts(
 @router.get("/metrics/conversion_rate/")
 def conversion_rate(
         session: Session = Depends(get_session),
-        start_date: datetime = Query(default=datetime(2000,1,1), description="Start date for the range of dates in ISO 8601 format"),
-        end_date: datetime = Query(default=datetime(2025,1,1), description="End date for the range of dates in ISO 8601 format")
+        start_date: datetime = Query(default=datetime(2000, 1, 1),
+                                     description="Start date for the range of dates in ISO 8601 format"),
+        end_date: datetime = Query(default=datetime(2025, 1, 1),
+                                   description="End date for the range of dates in ISO 8601 format")
 ):
-    return calculate_services_conversion_rate(session, start_date, end_date)
+    result = calculate_services_conversion_rate(session, start_date, end_date)
+    return list(result.values())
