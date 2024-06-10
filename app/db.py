@@ -876,6 +876,61 @@ service_views = [
         service_id=10, # de nperez
         timestamp=datetime.today() - timedelta(days=1)
     ),
+    ServiceView(
+        user_id=3,
+        service_id=7, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=7, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=11, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=11, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=14, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=14, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=14, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=13, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=13, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
 ]
 
 service_contacts = [
