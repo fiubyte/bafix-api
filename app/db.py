@@ -190,6 +190,46 @@ provider_4 = User(
     created_at=datetime.today() - timedelta(days=2)
 )
 
+provider_5 = User(
+    email="zure2005@hotmail.com",
+    password=auth_handler.get_password_hash("azuretti"),
+    roles=Role.PROVIDER.value,
+    approved=True,
+    name="Agustin",
+    surname="Zuretti",
+    profile_photo_url="https://www.shutterstock.com/image-photo/profile-picture-smiling-young-african-260nw-1873784920.jpg",
+    document_photo_url="https://tics.unaj.edu.ar/wp-content/uploads/sites/45/2021/03/Untitled-1-300x177.png",
+    document_number="38156545",
+    street="Av. Cordoba",
+    street_number="4326",
+    address_lat="-34.6464564623936",
+    address_long="-58.38277346103068",
+    postal_code='1425',
+    max_radius=2.5,
+    phone_number="+5491156160048",
+    created_at=datetime.today() - timedelta(days=2)
+)
+
+provider_6 = User(
+    email="ccalvo@hotmail.com",
+    password=auth_handler.get_password_hash("ccalvo"),
+    roles=Role.PROVIDER.value,
+    approved=True,
+    name="Carlos",
+    surname="Calvo",
+    profile_photo_url="https://www.shutterstock.com/image-photo/profile-picture-smiling-young-african-260nw-1873784920.jpg",
+    document_photo_url="https://tics.unaj.edu.ar/wp-content/uploads/sites/45/2021/03/Untitled-1-300x177.png",
+    document_number="12112122",
+    street="Av. Cordoba",
+    street_number="4326",
+    address_lat="-34.6464564623936",
+    address_long="-58.38277346103068",
+    postal_code='1414',
+    max_radius=2.5,
+    phone_number="+5491156160048",
+    created_at=datetime.today() - timedelta(days=2)
+)
+
 users = [
     user_admin,
     user_1,
@@ -198,7 +238,9 @@ users = [
     provider_1,
     provider_2,
     provider_3,
-    provider_4
+    provider_4,
+    provider_5,
+    provider_6
 ]
 
 service_categories = [
@@ -436,6 +478,28 @@ service_15 = Service(
     availability_time_end="18:00",
     availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
 )
+service_16 = Service(
+    user_id=9,
+    service_category_id=9,  # Reparacion de electrodomesticos
+    approved=True,
+    title="Reparación de electrodomésticos",
+    description="Reparación de TVs, Radios, todo tipo de aparatos electrónicos",
+    photo_url="https://content.elmueble.com/medio/2024/04/08/salon-moderno-pequeno-con-butacas-puf-y-boveda-catalana_ff8d0a80_00573567_240408153401_600x600.jpg",
+    availability_time_start="14:00",
+    availability_time_end="18:00",
+    availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
+)
+service_17 = Service(
+    user_id=8,
+    service_category_id=9,  # Reparacion de electrodomesticos
+    approved=True,
+    title="Reparación de pisos",
+    description="Reparación de pisos, plastificados",
+    photo_url="https://content.elmueble.com/medio/2024/04/08/salon-moderno-pequeno-con-butacas-puf-y-boveda-catalana_ff8d0a80_00573567_240408153401_600x600.jpg",
+    availability_time_start="14:00",
+    availability_time_end="18:00",
+    availability_days="Lunes,Martes,Miercoles,Jueves,Viernes"
+)
 
 services = [
     service_1,
@@ -452,7 +516,9 @@ services = [
     service_12,
     service_13,
     service_14,
-    service_15
+    service_15,
+    service_16,
+    service_17
 ]
 
 rates = [
@@ -507,6 +573,74 @@ rates = [
     Rate(
         user=user_1,
         service=service_10,
+        rate=5,
+        message="Excelente servicio, muy recomendable!",
+        approved=True,
+        user_name_to_display="Julia Benavídez"
+
+    ),
+    Rate(
+        user=user_2,
+        service=service_11,
+        rate=3,
+        message="Buen servicio, pero un poco caro",
+        approved=True,
+        user_name_to_display="Mario Delgado"
+    ),
+    Rate(
+        user=user_3,
+        service=service_11,
+        rate=5,
+        message="Excelente atencion, muy amable!",
+        approved=True,
+        user_name_to_display="Augusto Molina"
+    ),
+    Rate(
+        user=user_1,
+        service=service_11,
+        rate=5,
+        message="Excelente servicio, muy recomendable!",
+        approved=True,
+        user_name_to_display="Julia Benavídez"
+
+    ),
+    Rate(
+        user=user_2,
+        service=service_9,
+        rate=3,
+        message="Buen servicio, pero un poco caro",
+        approved=True,
+        user_name_to_display="Mario Delgado"
+    ),
+    Rate(
+        user=user_3,
+        service=service_16,
+        rate=5,
+        message="Es caro pero es bueno, muy amable!",
+        approved=True,
+        user_name_to_display="Augusto Molina"
+    ),
+    Rate(
+        user=user_1,
+        service=service_16,
+        rate=5,
+        message="Excelente servicio, muy recomendable!",
+        approved=True,
+        user_name_to_display="Julia Benavídez"
+
+    ),
+    Rate(
+        user=user_1,
+        service=service_17,
+        rate=5,
+        message="Excelente servicio, muy recomendable!",
+        approved=True,
+        user_name_to_display="Julia Benavídez"
+
+    ),
+    Rate(
+        user=user_3,
+        service=service_17,
         rate=5,
         message="Excelente servicio, muy recomendable!",
         approved=True,
@@ -683,6 +817,86 @@ service_contacts = [
     ServiceContact(
         user_id=7,
         service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=4,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=2,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=7,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=4,
+        service_id=8, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=8, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=2)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=17, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=10, # de nperez
+        timestamp=datetime.today() - timedelta(days=3)
+    ),
+    ServiceContact(
+        user_id=5,
+        service_id=10, # de nperez
         timestamp=datetime.today() - timedelta(days=3)
     ),
 ]

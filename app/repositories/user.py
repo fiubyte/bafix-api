@@ -5,6 +5,9 @@ from sqlalchemy import func
 from sqlmodel import Session, select
 
 from ..models.users import User
+from ..models.rates import Rate
+from ..models.services import Service
+from ..models.service_contact import ServiceContact
 
 
 def select_all_users(session: Session):
@@ -67,3 +70,33 @@ def find_total_users(session: Session, start: datetime, end: datetime, role: str
         previous_total_users = response[key]
 
     return response if response else None
+
+def find_top_providers_with_weighted_score(session: Session, start_date: datetime, end_date: datetime):
+    subquery = (
+        session.query(
+            Service.user_id.label('provider_id'),
+            func.avg(Rate.rate).label('average_rate'),
+            func.count(ServiceContact.id).label('contact_count')
+        )
+        .join(Rate, Service.id == Rate.service_id)
+        .join(ServiceContact, Service.id == ServiceContact.service_id)
+        .filter(ServiceContact.timestamp.between(start_date, end_date))
+        .group_by(Service.user_id)
+        .subquery()
+    )
+
+    query = (
+        session.query(
+            User.id,
+            User.name,
+            User.surname,
+            User.email,
+            User.profile_photo_url,
+            (subquery.c.average_rate * 0.7 + subquery.c.contact_count * 0.3).label('weighted_score')
+        )
+        .join(subquery, User.id == subquery.c.provider_id)
+        .order_by((subquery.c.average_rate * 0.7 + subquery.c.contact_count * 0.3).desc())
+        .limit(5)
+    )
+
+    return session.execute(query).all()
