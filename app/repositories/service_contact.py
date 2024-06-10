@@ -23,6 +23,6 @@ def find_top_contacts_users(session: Session, start: datetime, end: datetime):
               .order_by(func.count(ServiceContact.user_id).desc())
               .filter(ServiceContact.timestamp >= start)
               .filter(ServiceContact.timestamp <= end)
-              .all())
+              .limit(5))
     
-    return result if result else None   
+    return result if result else None

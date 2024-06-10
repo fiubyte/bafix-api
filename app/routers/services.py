@@ -22,7 +22,7 @@ from ..repositories.rate import save_rate, find_rate_by_id, find_rate_by_user_id
 from ..repositories.service import find_all_services, find_service_by_id, find_services_for_user, save_service, \
     find_average_rate_for_service, find_user_rate_approved_for_service, find_rates_for_service, \
     find_user_rate_value_for_service
-from ..repositories.service import get_filtered_services
+from ..repositories.service import get_filtered_services, find_top_services_with_weighted_score
 from ..repositories.service_contact import save_service_contact, find_service_contacts, find_top_contacts_users
 from ..repositories.service_view import save_service_view, find_service_views
 from ..repositories.user import find_user_by_id, find_user
@@ -404,16 +404,29 @@ def get_top_contacts(
     response = []
     contacts = find_top_contacts_users(session, start_date, end_date)
     
-    # Iterate over the contacts and find the user data for each contact
-    for contact in contacts: 
+    for contact in contacts:
+        print(contact)
         
         user_id = contact["user_id"]
         user = find_user_by_id(session, user_id)
-        response.append({"user_id": user.id, "user_name": user.name, "user_surname": user.surname, "photo_url": user.profile_photo_url})
+        response.append({"user_id": user.id, "user_name": user.name, "user_surname": user.surname, "photo_url": user.profile_photo_url, "contacts": contact[1]})
 
     
     if not contacts:
         raise HTTPException(status_code=404, detail="No contact data found for the specified range and grouping option.")
 
     return response
-    
+
+@router.get("/metrics/top_services/")
+def get_top_services(
+    session: Session = Depends(get_session),
+    start_date: datetime = Query(default=datetime(2000,1,1), description="Start date for the range of dates in ISO 8601 format"),
+    end_date: datetime = Query(default=datetime(2025,1,1), description="End date for the range of dates in ISO 8601 format")
+):
+    top_services = find_top_services_with_weighted_score(session, start_date, end_date)
+    print(top_services)
+    if not top_services:
+        raise HTTPException(status_code=404, detail="No services found for the specified date range.")
+
+    response = [{"service_id": service.id, "title": service.title, "photo_url": service.photo_url} for service in top_services]
+    return response

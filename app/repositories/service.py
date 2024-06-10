@@ -4,6 +4,7 @@ from .user import find_user_by_id
 from ..dependencies import UserDependency
 from ..models.favorites import Favorite
 from ..models.rates import Rate, RateReadForFilter
+from ..models.service_contact import ServiceContact    
 from ..models.services import Service, User
 from sqlalchemy import or_, and_, func, Float, cast, desc, asc, Table
 import datetime
@@ -139,3 +140,31 @@ def find_rates_for_service(session: Session, service_id: int):
         # print(f"User username: {user.name}")
         results.append(rate)
     return results
+
+def find_top_services_with_weighted_score(session: Session, start_date: datetime, end_date: datetime):
+    subquery = (
+        session.query(
+            Service.id,
+            func.avg(Rate.rate).label('average_rate'),
+            func.count(ServiceContact.id).label('contact_count')
+        )
+        .join(Rate, Service.id == Rate.service_id)
+        .join(ServiceContact, Service.id == ServiceContact.service_id)
+        .filter(ServiceContact.timestamp.between(start_date, end_date))
+        .group_by(Service.id)
+        .subquery()
+    )
+
+    query = (
+        session.query(
+            Service.id,
+            Service.title,
+            Service.photo_url,
+            (subquery.c.average_rate * 0.7 + subquery.c.contact_count * 0.3).label('weighted_score')
+        )
+        .join(subquery, Service.id == subquery.c.id)
+        .order_by((subquery.c.average_rate * 0.7 + subquery.c.contact_count * 0.3).desc())
+        .limit(10)
+    )
+
+    return session.execute(query).all()
