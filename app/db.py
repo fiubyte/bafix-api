@@ -777,13 +777,103 @@ service_views = [
         timestamp=datetime.today() - timedelta(days=1)
     ),
     ServiceView(
-        user_id=4,
+        user_id=2,
         service_id=16, # de nperez
         timestamp=datetime.today() - timedelta(days=1)
     ),
     ServiceView(
-        user_id=4,
+        user_id=3,
         service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+     ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=9, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=8, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=8, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=8, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=12, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=10, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=10, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=10, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=3,
+        service_id=10, # de nperez
         timestamp=datetime.today() - timedelta(days=1)
     ),
 ]
