@@ -23,9 +23,9 @@ class UserBase(SQLModel):
 
 
 class User(UserBase, table=True):
-    __table_args__ = (
-        UniqueConstraint("document_number", name="user_document_number_unique"),
-    )
+    # __table_args__ = (
+    #     UniqueConstraint("document_number", name="user_document_number_unique"),
+    # )
     id: Optional[int] = Field(primary_key=True)
     password: Optional[str] = Field(max_length=256, min_length=5)
     created_at: datetime.datetime = datetime.datetime.now()
