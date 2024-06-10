@@ -5,6 +5,8 @@ from ..dependencies import UserDependency
 from ..models.favorites import Favorite
 from ..models.rates import Rate, RateReadForFilter
 from ..models.service_contact import ServiceContact    
+from ..models.service_contact import ServiceContact
+from ..models.service_view import ServiceView
 from ..models.services import Service, User
 from sqlalchemy import or_, and_, func, Float, cast, desc, asc, Table
 import datetime
@@ -168,3 +170,25 @@ def find_top_services_with_weighted_score(session: Session, start_date: datetime
     )
 
     return session.execute(query).all()
+
+def calculate_services_conversion_rate(session: Session, start: datetime, end: datetime):
+    all_service_views = (session.query(Service)
+                         .distinct(Service.id)
+                         .all())
+
+    result = {}
+    for service in all_service_views:
+        total_views = (session.query(func.count(ServiceView.id))
+                       .where(ServiceView.service_id == service.id)
+                       .filter(ServiceView.timestamp >= start)
+                       .filter(ServiceView.timestamp <= end)
+                       .all())[0][0]
+        total_contacts = (session.query(func.count(ServiceContact.id))
+                          .where(ServiceContact.service_id == service.id)
+                          .filter(ServiceContact.timestamp >= start)
+                          .filter(ServiceContact.timestamp <= end)
+                          .all())[0][0]
+        if total_views != 0:
+            result[service.id] = {"service_id": service.id, "title": service.title, "conversion_rate": (total_contacts / total_views) * 100}
+
+    return {k: v for k, v in sorted(result.items(), key=lambda item: item[1]['conversion_rate'], reverse=True)} if result else None

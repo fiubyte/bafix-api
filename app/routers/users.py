@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from datetime import datetime
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session
 
 from ..auth import auth_handler
@@ -8,7 +10,7 @@ from ..models.enums.roles import Role
 from ..models.users import UserRead, UserInput, User, UserReject
 from ..repositories.service_contact import find_service_contacts
 from ..repositories.service_view import find_service_views
-from ..repositories.user import find_user, find_user_by_id, is_document_number_available
+from ..repositories.user import find_user, find_user_by_id, is_document_number_available, find_total_users
 
 router = APIRouter(
     prefix="/users",
@@ -84,7 +86,7 @@ def create_user(
 
     if not is_document_number_available(user.document_number, session):
         raise HTTPException(status_code=400, detail='Document number is taken')
-    
+
     address_lat, address_long = get_coordinates_from_address(user.street, user.street_number)
     hashed_pwd = auth_handler.get_password_hash(user.password)
     if not user_to_upsert:
@@ -176,3 +178,39 @@ def put_user_to_review(
     session.commit()
     session.refresh(user)
     return user
+
+
+@router.get("/metrics/total_users/")
+def get_total_users(
+        user: UserDependency,
+        session: Session = Depends(get_session),
+        start_date: datetime = Query(default=datetime(2000, 1, 1),
+                                     description="Start date for the range of dates in ISO 8601 format"),
+        end_date: datetime = Query(default=datetime(2025, 1, 1),
+                                   description="End date for the range of dates in ISO 8601 format")
+):
+    total_users_per_day = find_total_users(session, start_date, end_date, None)
+    response = []
+
+    for day, total in total_users_per_day.items():
+        response.append({"timestamp": day, "total_users": total})
+
+    return response
+
+
+@router.get("/metrics/total_providers/")
+def get_total_providers(
+        user: UserDependency,
+        session: Session = Depends(get_session),
+        start_date: datetime = Query(default=datetime(2000, 1, 1),
+                                     description="Start date for the range of dates in ISO 8601 format"),
+        end_date: datetime = Query(default=datetime(2025, 1, 1),
+                                   description="End date for the range of dates in ISO 8601 format")
+):
+    total_providers_per_day = find_total_users(session, start_date, end_date, Role.PROVIDER.value)
+    response = []
+
+    for day, total in total_providers_per_day.items():
+        response.append({"timestamp": day, "total_providers": total})
+
+    return response

@@ -1,6 +1,7 @@
 import datetime
-from sqlmodel import Session
+
 from sqlalchemy import func
+from sqlmodel import Session
 
 from app.models.service_contact import ServiceContact
 
@@ -16,8 +17,8 @@ def find_service_contacts(session: Session, service_id: int):
     result = session.query(ServiceContact).filter(ServiceContact.service_id == service_id).all()
     return result if result else None
 
-def find_top_contacts_users(session: Session, start: datetime, end: datetime):
 
+def find_top_contacts_users(session: Session, start: datetime, end: datetime):
     result = (session.query(ServiceContact.user_id, func.count(ServiceContact.user_id))
               .group_by(ServiceContact.user_id)
               .order_by(func.count(ServiceContact.user_id).desc())
