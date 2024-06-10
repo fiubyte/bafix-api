@@ -756,6 +756,36 @@ service_views = [
         service_id=12, # de nperez
         timestamp=datetime.today() - timedelta(days=1)
     ),
+    ServiceView(
+        user_id=4,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=4,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=4,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=4,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=4,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
+    ServiceView(
+        user_id=4,
+        service_id=16, # de nperez
+        timestamp=datetime.today() - timedelta(days=1)
+    ),
 ]
 
 service_contacts = [
