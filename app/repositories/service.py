@@ -166,7 +166,7 @@ def find_top_services_with_weighted_score(session: Session, start_date: datetime
         )
         .join(subquery, Service.id == subquery.c.id)
         .order_by((subquery.c.average_rate * 0.7 + subquery.c.contact_count * 0.3).desc())
-        .limit(10)
+        .limit(5)
     )
 
     return session.execute(query).all()
