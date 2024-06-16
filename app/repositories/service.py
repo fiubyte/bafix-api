@@ -193,7 +193,8 @@ def calculate_services_conversion_rate(session: Session, start: datetime, end: d
                           .all())[0][0]
         if total_views != 0:
             # result[service.id] = {"service_id": service.id, "title": service.title, "conversion_rate": (total_contacts / total_views) * 100}
-            result[service.id] = {"service_id": service.id, "title": service.title, "conversion_rate": (total_contacts / total_views) * math.log10(total_contacts + 1) * 100}
+            # result[service.id] = {"service_id": service.id, "title": service.title, "conversion_rate": (total_contacts / total_views) * math.log10(total_contacts + 1) * 100}
+            result[service.id] = {"service_id": service.id, "title": service.title, "conversion_rate": (((total_contacts / total_views) * math.sqrt(total_views))/(math.sqrt(total_views) + 1)) * 100}
 
     # Efectividad = (Ventas / Contactos) x log (contactos +1)
 
